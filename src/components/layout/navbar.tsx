@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 
@@ -46,11 +47,15 @@ export function Navbar() {
           ))}
         </nav>
 
-        <Button asChild size="sm">
-          <Link href="/resume.pdf" target="_blank">
-            Resume
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+
+          <Button asChild size="sm">
+            <Link href="/resume.pdf" target="_blank">
+              Resume
+            </Link>
+          </Button>
+        </div>
       </div>
     </header>
   )
