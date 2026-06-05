@@ -1,6 +1,13 @@
 import Link from "next/link"
+import type { Metadata } from "next"
 
 import { siteConfig } from "@/config/site"
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Contact Shine Bo Bo for collaboration, projects, opportunities, or questions.",
+}
 
 export default function ContactPage() {
   return (

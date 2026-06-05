@@ -1,3 +1,11 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Explore software, web development, university, and Digital Engineering projects by Shine Bo Bo.",
+}
+
 export default function ProjectsPage() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24">

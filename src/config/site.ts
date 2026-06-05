@@ -9,4 +9,13 @@ export const siteConfig = {
     github: "https://github.com/ShineBo",
     linkedin: "https://www.linkedin.com/in/s02bb/",
   },
+    keywords: [
+      "Shine Bo Bo",
+      "Computer Science",
+      "Digital Engineering",
+      "Software Developer",
+      "Web Developer",
+      "Portfolio",
+      "Projects",
+  ],
 }

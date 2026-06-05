@@ -1,3 +1,11 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Experience",
+  description:
+    "Work experience, academic experience, leadership roles, and technical responsibilities of Shine Bo Bo.",
+}
+
 export default function ExperiencePage() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24">

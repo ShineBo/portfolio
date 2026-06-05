@@ -1,3 +1,11 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn more about Ming Zhu, a Computer Science graduate and Digital Engineering student.",
+}
+
 export default function AboutPage() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24">
