@@ -39,16 +39,19 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link href="/" className="shrink-0 font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="shrink-0 text-sm font-semibold tracking-tight sm:text-base"
+        >
           {siteConfig.name}
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {item.label}
             </Link>
@@ -58,7 +61,7 @@ export function Navbar() {
         <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
 
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href="/resume.pdf" target="_blank">
               Resume
             </Link>
