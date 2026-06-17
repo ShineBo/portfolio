@@ -15,7 +15,10 @@ export function ExperienceSection() {
 
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {experiences.map((item) => (
-          <Card key={`${item.role}-${item.organization}`} className="h-full">
+          <Card
+            key={`${item.role}-${item.organization}`}
+            className="h-full transition-all hover:-translate-y-1 hover:shadow-md"
+          >
             <CardHeader>
               <div className="mb-3">
                 <Badge variant="secondary">{item.type}</Badge>

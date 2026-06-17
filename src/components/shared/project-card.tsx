@@ -16,7 +16,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="flex h-full flex-col transition-colors hover:bg-muted/40">
+    <Card className="flex h-full flex-col transition-all hover:-translate-y-1 hover:bg-muted/40 hover:shadow-md">
       <CardHeader>
         <div className="mb-3">
           <Badge variant="secondary">{project.category}</Badge>

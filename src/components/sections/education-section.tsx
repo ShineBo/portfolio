@@ -15,7 +15,7 @@ export function EducationSection() {
 
       <div className="mt-12 grid gap-6 lg:grid-cols-2">
         {education.map((item) => (
-          <Card key={item.degree} className="h-full">
+          <Card key={item.degree} className="h-full transition-all hover:-translate-y-1 hover:shadow-md">
             <CardHeader>
               <div className="mb-3 flex flex-wrap gap-2">
                 <Badge>{item.status}</Badge>

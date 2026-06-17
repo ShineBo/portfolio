@@ -15,7 +15,10 @@ export function ActivitiesSection() {
 
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         {activities.map((item) => (
-          <Card key={`${item.title}-${item.organization}`} className="h-full">
+          <Card
+            key={`${item.title}-${item.organization}`}
+            className="h-full transition-all hover:-translate-y-1 hover:shadow-md"
+          >
             <CardHeader>
               <div className="mb-3">
                 <Badge variant="secondary">{item.category}</Badge>

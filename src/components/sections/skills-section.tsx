@@ -15,7 +15,7 @@ export function SkillsSection() {
 
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {skillCategories.map((category) => (
-          <Card key={category.title} className="h-full">
+          <Card key={category.title} className="h-full transition-all hover:-translate-y-1 hover:shadow-md">
             <CardHeader>
               <CardTitle className="text-xl">{category.title}</CardTitle>
             </CardHeader>

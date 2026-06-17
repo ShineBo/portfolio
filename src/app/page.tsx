@@ -8,7 +8,7 @@ import { SkillsSection } from "@/components/sections/skills-section"
 
 export default function HomePage() {
   return (
-    <>
+    <div className="relative">
       <HeroSection />
       <FeaturedProjectsSection />
       <SkillsSection />
@@ -16,6 +16,6 @@ export default function HomePage() {
       <ExperienceSection />
       <ActivitiesSection />
       <ContactCtaSection />
-    </>
+    </div>
   )
 }
