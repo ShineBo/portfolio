@@ -1,4 +1,5 @@
 import { ActivitiesSection } from "@/components/sections/activities-section"
+import { ContactCtaSection } from "@/components/sections/contact-cta-section"
 import { EducationSection } from "@/components/sections/education-section"
 import { ExperienceSection } from "@/components/sections/experience-section"
 import { FeaturedProjectsSection } from "@/components/sections/featured-projects-section"
@@ -14,6 +15,7 @@ export default function HomePage() {
       <EducationSection />
       <ExperienceSection />
       <ActivitiesSection />
+      <ContactCtaSection />
     </>
   )
 }
