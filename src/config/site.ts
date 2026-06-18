@@ -3,7 +3,7 @@ export const siteConfig = {
   title: "Shine Bo Bo | Portfolio",
   description:
     "Computer Science graduate and Digital Engineering student building software, systems, and creative technology projects.",
-  url: "https://shinebobo.vercel.app",
+  url: "https://portfolio-shinebobo.vercel.app",
   email: "shinebobo648@gmail.com",
   links: {
     github: "https://github.com/ShineBo",

@@ -22,7 +22,7 @@ export const projects: Project[] = [
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
     href: "/projects/portfolio-website",
     github: "https://github.com/ShineBo/portfolio",
-    liveDemo: "https://shinebobo.vercel.app",
+    liveDemo: "https://portfolio-shinebobo.vercel.app",
     featured: true,
     overview:
       "This portfolio website is designed as a central place to present my technical projects, academic background, skills, experiences, university activities, and personal development. It is built with a modern frontend stack and structured so it can grow into a project archive, resume website, and personal knowledge base.",
