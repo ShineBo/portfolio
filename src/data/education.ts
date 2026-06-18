@@ -11,9 +11,9 @@ export type Education = {
 export const education: Education[] = [
   {
     degree: "B.Sc. in Computer Science",
-    school: "Your Graduated University Name",
+    school: "Myanmar Institute of Theology(LAP)",
     status: "Graduated",
-    period: "Your start year – Your graduation year",
+    period: "2021 – 2025",
     gpa: "3.74",
     description:
       "Completed a Computer Science degree with a foundation in programming, software development, databases, algorithms, and computer systems.",
@@ -25,9 +25,9 @@ export const education: Education[] = [
   },
   {
     degree: "B.Eng. in Digital Engineering",
-    school: "Your Current University Name",
+    school: "Prince of Songkla University(Phuket Campus)",
     status: "Currently studying",
-    period: "Your start year – Present",
+    period: "2024 – Present",
     gpa: "4.00",
     description:
       "Currently studying Digital Engineering with a focus on connecting software, systems, engineering design, and real-world digital transformation.",

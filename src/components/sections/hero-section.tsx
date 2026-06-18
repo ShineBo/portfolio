@@ -18,7 +18,7 @@ export function HeroSection() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-          Hi, I&apos;m Ming Zhu. I build web applications, technical projects,
+          Hi, I&apos;m Shine Bo Bo. I build web applications, technical projects,
           and digital engineering experiments that connect computer science,
           engineering, and real-world problem solving.
         </p>
