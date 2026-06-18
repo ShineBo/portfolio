@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Mail, FileText } from "lucide-react"
+import { FileText, Mail } from "lucide-react"
 
 import { SectionContainer } from "@/components/shared/section-container"
 import { SectionHeading } from "@/components/shared/section-heading"
@@ -26,6 +26,13 @@ const contactMethods = [
     description: "View my repositories, source code, and development work.",
     href: siteConfig.links.github,
     label: "GitHub profile",
+  },
+  {
+    title: "LinkedIn",
+    description:
+      "Connect with me professionally and view my academic and career profile.",
+    href: siteConfig.links.linkedin,
+    label: "LinkedIn profile",
   },
   {
     title: "Resume",
@@ -59,11 +66,23 @@ export default function ContactPage() {
               View Resume
             </Link>
           </Button>
+
+          <Button asChild variant="outline" size="lg">
+            <Link href={siteConfig.links.github} target="_blank">
+              GitHub
+            </Link>
+          </Button>
+
+          <Button asChild variant="outline" size="lg">
+            <Link href={siteConfig.links.linkedin} target="_blank">
+              LinkedIn
+            </Link>
+          </Button>
         </div>
       </SectionContainer>
 
       <SectionContainer className="pt-0">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {contactMethods.map((method) => (
             <Card
               key={method.title}

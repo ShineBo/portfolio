@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { Mail } from "lucide-react";
+import Link from "next/link"
+import { Mail } from "lucide-react"
 
-import { SectionContainer } from "@/components/shared/section-container";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/config/site";
+import { SectionContainer } from "@/components/shared/section-container"
+import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/config/site"
 
 export function ContactCtaSection() {
   return (
@@ -37,13 +37,19 @@ export function ContactCtaSection() {
             </Link>
           </Button>
 
-        <Button asChild variant="outline" size="lg">
-        <Link href={siteConfig.links.github} target="_blank">
-            GitHub
-        </Link>
-        </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href={siteConfig.links.github} target="_blank">
+              GitHub
+            </Link>
+          </Button>
+
+          <Button asChild variant="outline" size="lg">
+            <Link href={siteConfig.links.linkedin} target="_blank">
+              LinkedIn
+            </Link>
+          </Button>
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 }
