@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 
 import { SectionContainer } from "@/components/shared/section-container"
 import { SectionHeading } from "@/components/shared/section-heading"
@@ -39,11 +40,24 @@ export default function AboutPage() {
   return (
     <>
       <SectionContainer>
-        <SectionHeading
-          eyebrow="About"
-          title="Computer Science graduate and Digital Engineering student."
-          description="I am building a path that connects software development, engineering thinking, and practical technology projects."
-        />
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+          <SectionHeading
+            eyebrow="About"
+            title="Computer Science graduate and Digital Engineering student."
+            description="I am building a path that connects software development, engineering thinking, and practical technology projects."
+          />
+
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative h-[360px] w-[270px] overflow-hidden rounded-2xl border bg-muted shadow-md sm:h-[420px] sm:w-[315px]">
+              <Image
+                src="/images/profile.jpg"
+                alt="Shine Bo Bo profile photo"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {profileCards.map((card) => (
