@@ -1,16 +1,17 @@
 import { cn } from "@/lib/utils"
 
-type SectionContainerProps = {
-  children: React.ReactNode
-  className?: string
-}
+type SectionContainerProps = React.ComponentProps<"section">
 
 export function SectionContainer({
   children,
   className,
+  ...props
 }: SectionContainerProps) {
   return (
-    <section className={cn("mx-auto max-w-6xl px-6 py-20 sm:py-24", className)}>
+    <section
+      className={cn("mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:py-28", className)}
+      {...props}
+    >
       {children}
     </section>
   )

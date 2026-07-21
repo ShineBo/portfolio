@@ -1,113 +1,108 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { FileText, Mail } from "lucide-react"
+import { ArrowUpRight, BriefcaseBusiness, Code2, FileText, Mail, MessageSquareText } from "lucide-react"
 
+import { Reveal } from "@/components/motion/reveal"
+import { PageHero } from "@/components/shared/page-hero"
 import { SectionContainer } from "@/components/shared/section-container"
-import { SectionHeading } from "@/components/shared/section-heading"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Contact Ming Zhu for collaboration, projects, opportunities, or questions.",
+  description: "Contact Shine Bo Bo about internships, collaborations, projects, or software and Digital Engineering opportunities.",
 }
 
 const contactMethods = [
   {
     title: "Email",
-    description: "Reach out for collaboration, opportunities, or questions.",
+    description: "The best place for opportunities, project details, or a thoughtful introduction.",
     href: `mailto:${siteConfig.email}`,
     label: siteConfig.email,
+    icon: Mail,
   },
   {
     title: "GitHub",
-    description: "View my repositories, source code, and development work.",
+    description: "Browse repositories, source code, experiments, and ongoing development work.",
     href: siteConfig.links.github,
-    label: "GitHub profile",
+    label: "View GitHub profile",
+    icon: Code2,
   },
   {
     title: "LinkedIn",
-    description:
-      "Connect with me professionally and view my academic and career profile.",
+    description: "Connect professionally and follow my academic and career journey.",
     href: siteConfig.links.linkedin,
-    label: "LinkedIn profile",
+    label: "Connect on LinkedIn",
+    icon: BriefcaseBusiness,
   },
   {
     title: "Resume",
-    description: "View or download my resume as a PDF file.",
+    description: "A concise overview of my education, capabilities, projects, and experience.",
     href: "/resume.pdf",
-    label: "View resume",
+    label: "Open resume PDF",
+    icon: FileText,
   },
 ]
 
 export default function ContactPage() {
   return (
     <>
-      <SectionContainer>
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let’s connect."
-          description="I am open to internship opportunities, collaborations, academic projects, and conversations about software development, web technology, and Digital Engineering."
-        />
-
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+      <PageHero
+        eyebrow="Get in touch"
+        title="Good conversations can become great work."
+        description="I am open to internships, collaborations, academic projects, and conversations about software, AI, web technology, and Digital Engineering."
+      >
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg">
             <Link href={`mailto:${siteConfig.email}`}>
-              <Mail className="mr-2 h-4 w-4" />
-              Email Me
+              <Mail />
+              Email me
             </Link>
           </Button>
-
           <Button asChild variant="outline" size="lg">
-            <Link href="/resume.pdf" target="_blank">
-              <FileText className="mr-2 h-4 w-4" />
-              View Resume
-            </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg">
-            <Link href={siteConfig.links.github} target="_blank">
-              GitHub
-            </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg">
-            <Link href={siteConfig.links.linkedin} target="_blank">
-              LinkedIn
+            <Link href="/resume.pdf" target="_blank" rel="noreferrer">
+              <FileText />
+              View resume
             </Link>
           </Button>
         </div>
-      </SectionContainer>
+      </PageHero>
 
-      <SectionContainer className="pt-0">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {contactMethods.map((method) => (
-            <Card
-              key={method.title}
-              className="h-full transition-all hover:-translate-y-1 hover:shadow-md"
-            >
-              <CardHeader>
-                <CardTitle className="text-xl">{method.title}</CardTitle>
-              </CardHeader>
-
-              <CardContent>
-                <p className="text-sm leading-6 text-muted-foreground">
-                  {method.description}
-                </p>
-
-                <Link
-                  href={method.href}
-                  target={method.href.startsWith("http") ? "_blank" : undefined}
-                  className="mt-5 inline-flex text-sm font-medium underline underline-offset-4"
-                >
-                  {method.label}
-                </Link>
-              </CardContent>
-            </Card>
+      <SectionContainer>
+        <div className="grid gap-5 md:grid-cols-2">
+          {contactMethods.map(({ title, description, href, label, icon: Icon }, index) => (
+            <Reveal key={title} delay={(index % 2) * 0.06} className="h-full">
+              <Link
+                href={href}
+                target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                className="focus-ring group interactive-card glass-panel flex h-full flex-col rounded-3xl p-7 transition-all duration-500 sm:p-8"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <Icon className="size-5" />
+                  </span>
+                  <ArrowUpRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                </div>
+                <h2 className="mt-8 text-2xl font-bold tracking-[-0.04em]">{title}</h2>
+                <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">{description}</p>
+                <p className="mt-7 border-t border-border/60 pt-5 text-sm font-semibold text-primary break-all">{label}</p>
+              </Link>
+            </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-12 grid gap-8 rounded-3xl bg-secondary/70 p-7 sm:p-10 lg:grid-cols-[auto_1fr] lg:items-start">
+          <span className="grid size-12 place-items-center rounded-2xl bg-background text-primary shadow-sm">
+            <MessageSquareText className="size-5" />
+          </span>
+          <div>
+            <h2 className="text-xl font-bold tracking-tight">A helpful first message</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+              Tell me what you are working on, where I might contribute, and any timeline or context that matters. A clear note helps me understand the opportunity and respond thoughtfully.
+            </p>
+          </div>
+        </Reveal>
       </SectionContainer>
     </>
   )

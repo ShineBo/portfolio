@@ -1,55 +1,51 @@
 import Link from "next/link"
-import { Mail } from "lucide-react"
+import { ArrowRight, BriefcaseBusiness, Code2, Mail } from "lucide-react"
 
+import { Reveal } from "@/components/motion/reveal"
 import { SectionContainer } from "@/components/shared/section-container"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 
 export function ContactCtaSection() {
   return (
-    <SectionContainer>
-      <div className="rounded-2xl border bg-muted/40 px-6 py-12 text-center sm:px-12">
-        <p className="mb-4 text-sm font-medium uppercase tracking-widest text-muted-foreground">
-          Contact
-        </p>
+    <SectionContainer className="pt-6 sm:pt-8">
+      <Reveal>
+        <div className="relative isolate overflow-hidden rounded-[2rem] bg-foreground px-6 py-14 text-background shadow-2xl shadow-primary/10 sm:px-12 sm:py-18 lg:px-16">
+          <div className="absolute -top-32 -right-24 -z-10 size-96 rounded-full bg-primary/45 blur-3xl" />
+          <div className="absolute -bottom-36 -left-20 -z-10 size-80 rounded-full bg-cyan-400/20 blur-3xl" />
 
-        <h2 className="mx-auto max-w-3xl text-3xl font-bold tracking-tight sm:text-5xl">
-          Interested in working together or learning more about my projects?
-        </h2>
+          <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="max-w-3xl">
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-background/60">Let&apos;s build something</p>
+              <h2 className="text-4xl font-bold tracking-[-0.055em] sm:text-6xl lg:text-7xl">
+                Have an idea worth exploring?
+              </h2>
+              <p className="mt-6 max-w-2xl text-base leading-7 text-background/65 sm:text-lg">
+                I&apos;m open to internships, collaborations, academic projects, and conversations about software, AI, and digital engineering.
+              </p>
+            </div>
 
-        <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
-          I am open to internship opportunities, collaborations, academic
-          projects, and conversations related to software development, web
-          technology, and Digital Engineering.
-        </p>
+            <Button asChild size="lg" className="w-fit bg-background text-foreground shadow-none hover:bg-background/90">
+              <Link href={`mailto:${siteConfig.email}`}>
+                Start a conversation
+                <ArrowRight />
+              </Link>
+            </Button>
+          </div>
 
-        <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-          <Button asChild size="lg">
-            <Link href={`mailto:${siteConfig.email}`}>
-              <Mail className="mr-2 h-4 w-4" />
-              Email Me
+          <div className="mt-12 flex flex-wrap gap-x-6 gap-y-3 border-t border-background/15 pt-6 text-sm text-background/65">
+            <Link href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-2 hover:text-background">
+              <Mail className="size-4" /> {siteConfig.email}
             </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg">
-            <Link href="/resume.pdf" target="_blank">
-              View Resume
+            <Link href={siteConfig.links.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-background">
+              <Code2 className="size-4" /> GitHub
             </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg">
-            <Link href={siteConfig.links.github} target="_blank">
-              GitHub
+            <Link href={siteConfig.links.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-background">
+              <BriefcaseBusiness className="size-4" /> LinkedIn
             </Link>
-          </Button>
-
-          <Button asChild variant="outline" size="lg">
-            <Link href={siteConfig.links.linkedin} target="_blank">
-              LinkedIn
-            </Link>
-          </Button>
+          </div>
         </div>
-      </div>
+      </Reveal>
     </SectionContainer>
   )
 }
