@@ -5,18 +5,21 @@ import { ProjectCard } from "@/components/shared/project-card"
 import { SectionContainer } from "@/components/shared/section-container"
 import { SectionHeading } from "@/components/shared/section-heading"
 import { Button } from "@/components/ui/button"
-import { projects } from "@/data/projects"
+import { isFeaturedProject, projects } from "@/data/projects"
 
 export function FeaturedProjectsSection() {
-  const featuredProjects = projects.filter((project) => project.featured).slice(0, 4)
+  const featuredProjects = projects
+    .filter(isFeaturedProject)
+    .sort((a, b) => (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99))
+    .slice(0, 4)
 
   return (
     <SectionContainer id="featured-work" className="border-t border-border/50">
       <div className="flex flex-col gap-7 sm:flex-row sm:items-end sm:justify-between">
         <SectionHeading
           eyebrow="Selected work"
-          title="Projects built to learn, solve, and explore."
-          description="A selection across full-stack development, intelligent systems, and digital engineering. Each one represents a different problem, toolset, and stage of my growth."
+          title="Projects I built—and helped build."
+          description="A transparent selection of personal work, coursework, and public contributions. Each case study identifies the context, repository owner, my role, and what I learned."
         />
 
         <Button asChild variant="outline" className="self-start sm:self-auto">

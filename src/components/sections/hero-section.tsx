@@ -6,10 +6,10 @@ import { Reveal } from "@/components/motion/reveal"
 import { SectionContainer } from "@/components/shared/section-container"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { projects } from "@/data/projects"
+import { documentedProjectCount } from "@/data/projects"
 
 const heroStats = [
-  { value: `${projects.length}`, label: "Projects documented" },
+  { value: `${documentedProjectCount}`, label: "Public projects documented" },
   { value: "2", label: "Engineering disciplines" },
   { value: "4.00", label: "Current GPA" },
 ]

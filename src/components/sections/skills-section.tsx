@@ -8,29 +8,29 @@ import { SectionHeading } from "@/components/shared/section-heading"
 const capabilities = [
   {
     number: "01",
-    title: "Frontend experiences",
-    description: "Responsive interfaces with strong hierarchy, accessible interaction, and thoughtful details.",
+    title: "Web interface practice",
+    description: "Used component-based UI, responsive layouts, and TypeScript across personal, coursework, and team builds.",
     tools: "React · Next.js · TypeScript",
     icon: Code2,
   },
   {
     number: "02",
-    title: "Full-stack systems",
-    description: "Connected products that combine application logic, APIs, authentication, and reliable data.",
+    title: "APIs & data",
+    description: "Practised connecting interfaces, APIs, authentication, and databases in full-stack and backend projects.",
     tools: "Node.js · NestJS · SQL",
     icon: Layers3,
   },
   {
     number: "03",
-    title: "AI & data projects",
-    description: "Practical experiments that move from dataset preparation to model evaluation and usable demos.",
+    title: "AI & data exploration",
+    description: "Worked through data preparation, model training, evaluation, and small demos in academic projects.",
     tools: "Python · TensorFlow · Streamlit",
     icon: BrainCircuit,
   },
   {
     number: "04",
-    title: "Connected engineering",
-    description: "Prototypes that bridge code, simulation, systems thinking, and the physical world.",
+    title: "Connected engineering practice",
+    description: "Used C++ and simulation tools to explore early IoT and systems-integration concepts.",
     tools: "C++ · IoT · PlatformIO",
     icon: Cpu,
   },
@@ -42,16 +42,16 @@ export function SkillsSection() {
       <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div>
           <SectionHeading
-            eyebrow="Capabilities"
-            title="A broad toolkit, grounded in building."
-            description="I learn best by making real things—moving between design, code, data, and engineering depending on what the problem needs."
+            eyebrow="Skills in practice"
+            title="A project-backed toolkit, still growing."
+            description="I learn best by building. These tools come from student projects, personal experiments, and collaborative work—not a claim of professional fluency."
           />
           <Reveal delay={0.08}>
             <Link
               href="/skills"
               className="focus-ring mt-8 inline-flex items-center gap-2 rounded-full text-sm font-semibold text-primary transition-colors hover:text-foreground"
             >
-              Explore the complete toolkit
+              See skills and evidence
               <ArrowUpRight className="size-4" />
             </Link>
           </Reveal>

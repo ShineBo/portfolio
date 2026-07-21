@@ -1,7 +1,13 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
-import type { Project } from "@/data/projects"
+import {
+  getProjectHref,
+  projectContextLabels,
+  projectDomainLabels,
+  projectRelationshipLabels,
+  type Project,
+} from "@/data/projects"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { ProjectVisual } from "@/components/shared/project-visual"
@@ -14,9 +20,11 @@ type ProjectCardProps = {
 }
 
 export function ProjectCard({ project, className, priority = false }: ProjectCardProps) {
+  const primaryRepository = project.repositories[0]
+
   return (
     <Card className={cn("interactive-card h-full p-0", className)}>
-      <Link href={project.href} className="focus-ring flex h-full flex-col rounded-3xl">
+      <Link href={getProjectHref(project)} className="focus-ring flex h-full flex-col rounded-3xl">
         <ProjectVisual
           project={project}
           className={priority ? "min-h-64 sm:min-h-72" : undefined}
@@ -24,9 +32,16 @@ export function ProjectCard({ project, className, priority = false }: ProjectCar
 
         <CardContent className="flex flex-1 flex-col p-6 sm:p-7">
           <div className="flex items-start justify-between gap-4">
-            <Badge variant="secondary" className="h-6 px-2.5 text-[0.68rem]">
-              {project.category}
-            </Badge>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className="h-6 px-2.5 text-[0.68rem]">
+                {projectDomainLabels[project.domains[0]]}
+              </Badge>
+              {project.relationship === "external-contributor" ? (
+                <Badge variant="outline" className="h-6 px-2.5 text-[0.68rem] text-primary">
+                  Contribution
+                </Badge>
+              ) : null}
+            </div>
             <span className="grid size-9 shrink-0 place-items-center rounded-full border border-border/80 transition-all duration-300 group-hover/card:-translate-y-0.5 group-hover/card:translate-x-0.5 group-hover/card:border-primary/35 group-hover/card:bg-primary group-hover/card:text-primary-foreground">
               <ArrowUpRight className="size-4" />
             </span>
@@ -39,7 +54,21 @@ export function ProjectCard({ project, className, priority = false }: ProjectCar
             {project.description}
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-x-3 gap-y-1.5 border-t border-border/60 pt-5 font-mono text-[0.68rem] text-muted-foreground">
+          <div className="mt-6 rounded-2xl border border-border/60 bg-secondary/35 p-3.5">
+            <div className="flex items-center justify-between gap-3 font-mono text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              <span>
+                {projectContextLabels[project.context]} · {projectRelationshipLabels[project.relationship]}
+              </span>
+              <span>{project.year}</span>
+            </div>
+            <p className="mt-2 text-xs leading-5 text-foreground/80">
+              {project.relationship === "external-contributor"
+                ? `Repository · ${primaryRepository.owner}`
+                : `My role · ${project.role}`}
+            </p>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-x-3 gap-y-1.5 border-t border-border/60 pt-5 font-mono text-[0.68rem] text-muted-foreground">
             {project.techStack.slice(0, 4).map((tech) => (
               <span key={tech}>{tech}</span>
             ))}

@@ -1,6 +1,6 @@
 import { BrainCircuit, Code2, Cpu, Database, Layers3 } from "lucide-react"
 
-import type { Project } from "@/data/projects"
+import { projectContextLabels, type Project } from "@/data/projects"
 import { cn } from "@/lib/utils"
 
 const palettes = [
@@ -11,10 +11,10 @@ const palettes = [
 ]
 
 function ProjectIcon({ project }: { project: Project }) {
-  if (project.category.includes("AI")) return <BrainCircuit className="size-5" />
-  if (project.category.includes("IoT")) return <Cpu className="size-5" />
-  if (project.category.includes("Database") || project.category.includes("Backend")) return <Database className="size-5" />
-  if (project.category.includes("Full-Stack")) return <Layers3 className="size-5" />
+  if (project.domains.includes("ai-data")) return <BrainCircuit className="size-5" />
+  if (project.domains.includes("iot-embedded")) return <Cpu className="size-5" />
+  if (project.domains.includes("backend-data")) return <Database className="size-5" />
+  if (project.domains.includes("full-stack")) return <Layers3 className="size-5" />
   return <Code2 className="size-5" />
 }
 
@@ -52,7 +52,7 @@ export function ProjectVisual({ project, className, label = true }: ProjectVisua
 
         {label ? (
           <p className="max-w-[14rem] text-sm font-semibold tracking-tight text-foreground/75">
-            Project preview · Replace with final screenshots
+            {projectContextLabels[project.context]} · {project.year}
           </p>
         ) : null}
       </div>
