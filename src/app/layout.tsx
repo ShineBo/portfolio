@@ -3,7 +3,6 @@ import localFont from "next/font/local"
 
 import { Footer } from "@/components/layout/footer"
 import { Navbar } from "@/components/layout/navbar"
-import { RouteTransition } from "@/components/motion/route-transition"
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { siteConfig } from "@/config/site"
 
@@ -66,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
       >
@@ -78,9 +77,7 @@ export default function RootLayout({
         >
           <div className="site-shell flex min-h-screen flex-col">
             <Navbar />
-            <main className="flex-1">
-              <RouteTransition>{children}</RouteTransition>
-            </main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>
