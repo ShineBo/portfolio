@@ -171,6 +171,9 @@ export const projects: Project[] = [
       {
         label: "Team repository",
         owner: "Lin-Pyae/Movie-Recommendation",
+        url: "https://github.com/Lin-Pyae/Movie-Recommendation",
+        contributionUrl:
+          "https://github.com/Lin-Pyae/Movie-Recommendation/commits/main/?author=ShineBo",
       },
     ],
     featuredOrder: 3,
@@ -303,10 +306,14 @@ export const projects: Project[] = [
       {
         label: "Team platform repository",
         owner: "min-peter/lap-portfolio-builder-platform",
+        url: "https://github.com/min-peter/lap-portfolio-builder-platform",
+        contributionUrl:
+          "https://github.com/min-peter/lap-portfolio-builder-platform/commits/main/?author=ShineBo",
       },
       {
         label: "Backend working repository",
         owner: "ShineBo/lap-portfolio-builder-platform-backend",
+        url: "https://github.com/ShineBo/lap-portfolio-builder-platform-backend",
       },
     ],
     featuredOrder: 7,

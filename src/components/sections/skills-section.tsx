@@ -29,9 +29,9 @@ const capabilities = [
   },
   {
     number: "04",
-    title: "Connected engineering practice",
-    description: "Used C++ and simulation tools to explore early IoT and systems-integration concepts.",
-    tools: "C++ · IoT · PlatformIO",
+    title: "Systems, security & hardware",
+    description: "Combining coursework in networks, security, architecture, and IoT with practical custom-PC building and troubleshooting.",
+    tools: "Networks · IoT · PC hardware",
     icon: Cpu,
   },
 ]

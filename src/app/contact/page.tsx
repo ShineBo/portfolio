@@ -10,7 +10,7 @@ import { siteConfig } from "@/config/site"
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Contact Shine Bo Bo about internships, collaborations, projects, or software and Digital Engineering opportunities.",
+  description: "Contact Shine Bo Bo about software, full-stack, backend, Digital Engineering, and technology internship or junior opportunities.",
 }
 
 const contactMethods = [
@@ -49,8 +49,8 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="Get in touch"
-        title="Good conversations can become great work."
-        description="I am open to internships, collaborations, academic projects, and conversations about software, AI, web technology, and Digital Engineering."
+        title="Ready to learn fast—and contribute thoughtfully."
+        description="I am open to software development, full-stack, backend, Digital Engineering, and practical technology internships or junior opportunities. I also welcome thoughtful collaborations."
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg">

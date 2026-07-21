@@ -1,15 +1,19 @@
 import type { Metadata } from "next"
-import { Check, Milestone } from "lucide-react"
+import Link from "next/link"
+import { ArrowUpRight, BriefcaseBusiness, Check, Milestone } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
 import { PageHero } from "@/components/shared/page-hero"
 import { SectionContainer } from "@/components/shared/section-container"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { siteConfig } from "@/config/site"
 import { experiences } from "@/data/experience"
 
 export const metadata: Metadata = {
   title: "Experience",
-  description: "Work, research, volunteer, and project experience of Shine Bo Bo.",
+  description:
+    "Leadership, research, freelance PC hardware, customer, and AIESEC experience of Shine Bo Bo.",
 }
 
 export default function ExperiencePage() {
@@ -17,9 +21,17 @@ export default function ExperiencePage() {
     <>
       <PageHero
         eyebrow="Experience"
-        title="Different roles, a shared habit of showing up."
-        description="My experience spans research, project development, customer-facing work, and volunteering—each one has strengthened a different part of how I work."
-      />
+        title="Technical curiosity, grounded by responsibility."
+        description="My experience spans student leadership, academic research, hands-on PC hardware, customer-facing work, and youth-led events—each role has strengthened a different part of how I contribute."
+      >
+        <Button asChild variant="outline">
+          <Link href={siteConfig.links.linkedin} target="_blank" rel="noreferrer">
+            <BriefcaseBusiness />
+            View LinkedIn
+            <ArrowUpRight />
+          </Link>
+        </Button>
+      </PageHero>
 
       <SectionContainer>
         <div className="mx-auto max-w-5xl">

@@ -16,12 +16,12 @@ export function ContactCtaSection() {
 
           <div className="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="max-w-3xl">
-              <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-background/60">Let&apos;s build something</p>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-background/60">Open to opportunities</p>
               <h2 className="text-4xl font-bold tracking-[-0.055em] sm:text-6xl lg:text-7xl">
-                Have an idea worth exploring?
+                Looking for a curious early-career builder?
               </h2>
               <p className="mt-6 max-w-2xl text-base leading-7 text-background/65 sm:text-lg">
-                I&apos;m open to internships, collaborations, academic projects, and conversations about software, AI, and digital engineering.
+                I&apos;m open to internships and junior opportunities across software development, full-stack and backend work, digital engineering, and practical technology.
               </p>
             </div>
 

@@ -11,8 +11,10 @@ import {
   Layers3,
   MessagesSquare,
   Server,
+  ShieldCheck,
   Sparkles,
   Target,
+  Wrench,
 } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
@@ -34,16 +36,28 @@ export const metadata: Metadata = {
     "A project-backed view of the technical tools, collaboration strengths, and current learning areas of Shine Bo Bo.",
 }
 
-const categoryIcons = [Code2, Server, Database, BrainCircuit, Cpu, Layers3, GitBranch]
+const categoryIcons = [
+  Code2,
+  Server,
+  Database,
+  BrainCircuit,
+  Cpu,
+  ShieldCheck,
+  Wrench,
+  Layers3,
+  GitBranch,
+]
 
 const technicalEvidence: Exclude<SkillEvidence, "learning-now">[] = [
   "repeated-project-use",
+  "practical-experience",
   "project-exposure",
   "coursework-exposure",
 ]
 
 const evidenceStyles: Record<SkillEvidence, string> = {
   "repeated-project-use": "border-primary/25 bg-primary/10 text-primary",
+  "practical-experience": "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
   "project-exposure": "border-border/80 bg-secondary/75 text-secondary-foreground",
   "coursework-exposure": "border-border/80 bg-card text-muted-foreground",
   "learning-now": "border-primary/25 bg-primary/10 text-primary",
@@ -59,11 +73,11 @@ export default function SkillsPage() {
       <PageHero
         eyebrow="Skills in practice"
         title="A project-backed toolkit, still growing."
-        description="These are tools and concepts I have used in coursework, personal builds, and team projects. They show hands-on exposure rather than professional mastery, and I am continuing to deepen them through practice."
+        description="These are tools and concepts I have used in coursework, personal builds, team projects, and practical PC and customer work. They show evidence of exposure—not professional mastery—and I am continuing to deepen them through practice."
       >
         <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-4 py-2 text-sm font-medium text-foreground">
           <BookOpen className="size-4 text-primary" />
-          Student and project-based experience
+          Student, project, and hands-on work experience
         </div>
       </PageHero>
 
@@ -151,22 +165,29 @@ export default function SkillsPage() {
                     })}
                   </div>
 
-                  <div className="mt-6 border-t border-border/60 pt-5">
-                    <p className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                      Project evidence
-                    </p>
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-                      {category.projectExamples.map((project) => (
-                        <Link
-                          key={project.slug}
-                          href={`/projects/${project.slug}`}
-                          className="focus-ring inline-flex items-center gap-1 rounded-full text-xs font-semibold text-primary transition-colors hover:text-foreground"
-                        >
-                          {project.label} <ArrowUpRight className="size-3" />
-                        </Link>
-                      ))}
+                  {category.projectExamples.length > 0 || category.evidenceNote ? (
+                    <div className="mt-6 border-t border-border/60 pt-5">
+                      <p className="font-mono text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                        {category.projectExamples.length > 0 ? "Project evidence" : "Evidence context"}
+                      </p>
+                      {category.projectExamples.length > 0 ? (
+                        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+                          {category.projectExamples.map((project) => (
+                            <Link
+                              key={project.slug}
+                              href={`/projects/${project.slug}`}
+                              className="focus-ring inline-flex items-center gap-1 rounded-full text-xs font-semibold text-primary transition-colors hover:text-foreground"
+                            >
+                              {project.label} <ArrowUpRight className="size-3" />
+                            </Link>
+                          ))}
+                        </div>
+                      ) : null}
+                      {category.evidenceNote ? (
+                        <p className="mt-3 text-xs leading-5 text-muted-foreground">{category.evidenceNote}</p>
+                      ) : null}
                     </div>
-                  </div>
+                  ) : null}
                 </article>
               </Reveal>
             )

@@ -19,8 +19,7 @@ export function Footer() {
               {siteConfig.name}
             </Link>
             <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-              Building useful digital experiences at the intersection of software,
-              systems, and engineering.
+              A Computer Science graduate and Digital Engineering student building at the intersection of software, systems, people, and practical technology.
             </p>
           </div>
 

@@ -1,5 +1,6 @@
 export type SkillEvidence =
   | "repeated-project-use"
+  | "practical-experience"
   | "project-exposure"
   | "coursework-exposure"
   | "learning-now"
@@ -14,6 +15,7 @@ export type SkillCategory = {
   description: string
   skills: TechnicalSkill[]
   projectExamples: { label: string; slug: string }[]
+  evidenceNote?: string
 }
 
 export type SoftSkill = {
@@ -35,6 +37,11 @@ export const evidenceGuide: {
     level: "repeated-project-use",
     label: "Repeated project use",
     description: "Used in more than one documented personal, academic, or team build.",
+  },
+  {
+    level: "practical-experience",
+    label: "Hands-on work exposure",
+    description: "Used in freelance, customer-facing, leadership, or operational responsibilities.",
   },
   {
     level: "project-exposure",
@@ -150,6 +157,40 @@ export const skillCategories: SkillCategory[] = [
     projectExamples: [{ label: "Smart HVAC", slug: "iot-project" }],
   },
   {
+    title: "Networks & Security Foundations",
+    description:
+      "Foundational study from Digital Engineering coursework. These are learning areas—not claims of security-industry experience.",
+    skills: [
+      { name: "Networking Fundamentals", evidence: "coursework-exposure" },
+      { name: "Data Communications", evidence: "coursework-exposure" },
+      { name: "Network & Security Concepts", evidence: "coursework-exposure" },
+      { name: "Cybersecurity Fundamentals", evidence: "coursework-exposure" },
+      { name: "Cryptography Fundamentals", evidence: "coursework-exposure" },
+      { name: "Computer Architecture & OS", evidence: "coursework-exposure" },
+    ],
+    projectExamples: [],
+    evidenceNote:
+      "Developed through PSU Digital Engineering modules, guided exercises, and independent study.",
+  },
+  {
+    title: "PC Hardware & Customer Support",
+    description:
+      "Practical experience from buying, building, troubleshooting, and reselling gaming PCs and components for customers.",
+    skills: [
+      { name: "Component Selection", evidence: "practical-experience" },
+      { name: "Compatibility Planning", evidence: "practical-experience" },
+      { name: "Custom PC Assembly", evidence: "practical-experience" },
+      { name: "Hardware Diagnostics", evidence: "practical-experience" },
+      { name: "Troubleshooting", evidence: "practical-experience" },
+      { name: "Parts Sourcing & Resale", evidence: "practical-experience" },
+      { name: "Customer Needs Assessment", evidence: "practical-experience" },
+      { name: "Basic After-Sales Support", evidence: "practical-experience" },
+    ],
+    projectExamples: [],
+    evidenceNote:
+      "Evidence comes from freelance PC buying, building, resale, and family-business responsibilities from 2022 to 2024.",
+  },
+  {
     title: "Java & Application Foundations",
     description:
       "Java experience developed through backend, desktop GUI, and small game projects focused on programming fundamentals.",
@@ -187,29 +228,34 @@ export const skillCategories: SkillCategory[] = [
 
 export const softSkills: SoftSkill[] = [
   {
-    title: "Collaboration & coordination",
+    title: "Leadership & inclusive coordination",
     evidence:
-      "Developed through shared software projects and logistics and delegate-support work with AIESEC.",
+      "Developed as president of the PSU Phuket International Student Club and through 230 recorded university activity hours.",
   },
   {
-    title: "Communication & presentation",
+    title: "Cross-cultural collaboration",
     evidence:
-      "Practised through university presentations, technical explanations, customer conversations, and event support.",
+      "Practised through AUS 2026, the Tokyo design workshop, and two data-visualization exchanges with students from across Asia.",
   },
   {
-    title: "Problem-solving & analysis",
+    title: "Communication & public speaking",
     evidence:
-      "Applied while debugging applications, evaluating machine-learning results, and working through project constraints.",
+      "Strengthened through English-language presentations, a Youth & Mental Health podcast guest role, customer conversations, and event support.",
+  },
+  {
+    title: "Practical problem-solving & customer awareness",
+    evidence:
+      "Applied while diagnosing PC hardware, balancing budgets and compatibility, debugging software, and responding to changing customer needs.",
   },
   {
     title: "Adaptability & self-directed learning",
     evidence:
-      "Strengthened by moving between web, data, Java, and IoT coursework and learning unfamiliar tools as projects required.",
+      "Strengthened by moving between web, data, Java, security, hardware, and IoT work while learning new tools as each project required.",
   },
   {
-    title: "Organization & responsibility",
+    title: "Social awareness & ethical perspective",
     evidence:
-      "Built by balancing coursework, group deadlines, event logistics, and responsibilities in a family business.",
+      "Shaped by a liberal-arts curriculum, community volunteering, and creative work for the One Billion Rising gender-equality project.",
   },
 ]
 
@@ -219,8 +265,8 @@ export const learningAreas: LearningArea[] = [
     focus: "Understanding how interfaces, APIs, authentication, data models, and deployment fit together.",
   },
   {
-    title: "Application security fundamentals",
-    focus: "Improving validation, secure authentication, permissions, and awareness of common web risks.",
+    title: "Networks, cybersecurity & cryptography fundamentals",
+    focus: "Deepening network concepts, security principles, cryptographic foundations, and safe system configuration through study and practice.",
   },
   {
     title: "Cloud & deployment workflows",
@@ -235,7 +281,7 @@ export const learningAreas: LearningArea[] = [
     focus: "Practising clearer structure, maintainable code, testing habits, and useful project documentation.",
   },
   {
-    title: "IoT & connected systems",
-    focus: "Building from simulation toward stronger sensor, hardware, and software-integration experience.",
+    title: "Hardware diagnostics & connected systems",
+    focus: "Building from PC assembly and simulation toward stronger diagnostics, sensors, electronics, and hardware–software integration.",
   },
 ]

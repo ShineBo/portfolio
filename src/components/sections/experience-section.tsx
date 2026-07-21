@@ -14,8 +14,8 @@ export function ExperienceSection() {
       <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
         <SectionHeading
           eyebrow="Experience"
-          title="Learning through responsibility."
-          description="Work, research, and volunteer roles that strengthened how I communicate, adapt, and deliver with a team."
+          title="Learning through real responsibility."
+          description="Leadership, research, freelance PC hardware, customer work, and volunteering have taught me to communicate clearly, adapt quickly, and follow through."
         />
         <Link
           href="/experience"

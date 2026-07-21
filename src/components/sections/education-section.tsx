@@ -1,4 +1,4 @@
-import { GraduationCap } from "lucide-react"
+import { Award, GraduationCap } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
 import { SectionContainer } from "@/components/shared/section-container"
@@ -11,8 +11,8 @@ export function EducationSection() {
     <SectionContainer className="border-t border-border/50">
       <SectionHeading
         eyebrow="Education"
-        title="Two disciplines, one connected perspective."
-        description="Computer Science gave me the foundation to build software. Digital Engineering is teaching me how that software fits into larger systems and real-world change."
+        title="Technical depth, with human context."
+        description="A liberal-arts Computer Science foundation taught me to consider people and society. Digital Engineering now extends that thinking into software, networks, security, hardware, and connected systems."
       />
 
       <div className="mt-12 grid gap-5 lg:grid-cols-2">
@@ -28,10 +28,21 @@ export function EducationSection() {
               </div>
               <h3 className="relative mt-8 text-2xl font-bold tracking-[-0.035em]">{item.degree}</h3>
               <p className="relative mt-2 text-sm text-muted-foreground">{item.school}</p>
+              {item.program || item.faculty ? (
+                <p className="relative mt-1 text-xs text-muted-foreground">
+                  {[item.program, item.faculty].filter(Boolean).join(" · ")}
+                </p>
+              ) : null}
               <div className="relative mt-7 flex flex-wrap gap-5 border-t border-border/60 pt-5 text-sm">
                 <span><strong className="font-semibold">{item.period}</strong></span>
                 {item.gpa ? <span className="text-muted-foreground">GPA <strong className="text-foreground">{item.gpa}</strong></span> : null}
               </div>
+              {item.distinction ? (
+                <p className="relative mt-5 inline-flex items-center gap-2 text-xs font-semibold text-amber-700 dark:text-amber-300">
+                  <Award className="size-4" />
+                  {item.distinction.title}
+                </p>
+              ) : null}
             </article>
           </Reveal>
         ))}

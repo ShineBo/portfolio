@@ -9,8 +9,8 @@ import { siteConfig } from "@/config/site"
 import { documentedProjectCount } from "@/data/projects"
 
 const heroStats = [
-  { value: `${documentedProjectCount}`, label: "Public projects documented" },
-  { value: "2", label: "Engineering disciplines" },
+  { value: `${documentedProjectCount}`, label: "Projects documented" },
+  { value: "230", label: "Recorded activity hours" },
   { value: "4.00", label: "Current GPA" },
 ]
 
@@ -44,8 +44,8 @@ export function HeroSection() {
           <Reveal delay={0.12}>
             <p className="mt-7 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
               I&apos;m <strong className="font-semibold text-foreground">Shine Bo Bo</strong>,
-              a Computer Science graduate and Digital Engineering student creating
-              thoughtful web products, intelligent applications, and connected prototypes.
+              a Computer Science graduate and third-year Digital Engineering student creating
+              thoughtful software, intelligent applications, connected prototypes, and practical systems.
             </p>
           </Reveal>
 
@@ -107,7 +107,7 @@ export function HeroSection() {
             </span>
             <div>
               <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">Currently</p>
-              <p className="text-sm font-semibold">Exploring digital engineering</p>
+              <p className="text-sm font-semibold">Learning, leading & building</p>
             </div>
           </div>
         </Reveal>

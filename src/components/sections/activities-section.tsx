@@ -1,22 +1,24 @@
 import Link from "next/link"
-import { ArrowUpRight, Lightbulb, Presentation, Users } from "lucide-react"
+import { ArrowUpRight, Globe2, Sparkles, Users } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
 import { SectionContainer } from "@/components/shared/section-container"
 import { SectionHeading } from "@/components/shared/section-heading"
 import { activities } from "@/data/activities"
 
-const icons = [Users, Presentation, Lightbulb]
+const icons = [Globe2, Users, Sparkles]
 
 export function ActivitiesSection() {
+  const selectedActivities = activities.filter((item) => item.featured).slice(0, 3)
+
   return (
     <SectionContainer className="border-t border-border/50">
       <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
         <div>
           <SectionHeading
-            eyebrow="Beyond the code"
-            title="Curiosity is part of the work."
-            description="Team activities, presentations, and personal exploration keep me growing beyond the technical details."
+            eyebrow="Leadership & activities"
+            title="Learning across borders. Leading where I am."
+            description="International programs, student leadership, and 230 recorded activity hours have strengthened how I listen, communicate, and contribute."
           />
           <Reveal delay={0.08}>
             <Link href="/activities" className="focus-ring mt-8 inline-flex items-center gap-2 rounded-full text-sm font-semibold text-primary hover:text-foreground">
@@ -27,8 +29,8 @@ export function ActivitiesSection() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-          {activities.map((item, index) => {
-            const Icon = icons[index] ?? Lightbulb
+          {selectedActivities.map((item, index) => {
+            const Icon = icons[index] ?? Sparkles
             return (
               <Reveal key={item.title} delay={index * 0.06}>
                 <article className="group grid h-full gap-4 rounded-2xl border border-border/70 bg-card/60 p-5 transition-all duration-300 hover:border-primary/25 hover:bg-card sm:block lg:grid lg:grid-cols-[auto_1fr] lg:items-start lg:gap-5">
