@@ -3,10 +3,16 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpRight, FileText, Menu, X } from "lucide-react"
+import { ArrowUpRight, ChevronDown, FileText, Files, Menu, X } from "lucide-react"
 
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 
@@ -68,12 +74,39 @@ export function Navbar() {
 
         <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
-          <Button asChild size="sm" className="hidden sm:inline-flex">
-            <Link href="/resume.pdf" target="_blank" rel="noreferrer">
-              Resume
-              <ArrowUpRight />
-            </Link>
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="sm" className="hidden sm:inline-flex" aria-label="Choose resume or CV">
+                Resume / CV
+                <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-72 p-2">
+              {Object.values(siteConfig.documents).map((document, index) => {
+                const Icon = index === 0 ? FileText : Files
+
+                return (
+                  <DropdownMenuItem key={document.href} asChild className="p-0">
+                    <a
+                      href={document.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-start gap-3 rounded-md px-3 py-3"
+                    >
+                      <Icon className="mt-0.5 size-4 text-primary" />
+                      <span className="min-w-0">
+                        <span className="block font-semibold">{document.label}</span>
+                        <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
+                          {document.description}
+                        </span>
+                      </span>
+                      <ArrowUpRight className="mt-0.5 ml-auto size-3.5 text-muted-foreground" />
+                    </a>
+                  </DropdownMenuItem>
+                )
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button
             variant="outline"
             size="icon"
@@ -115,12 +148,30 @@ export function Navbar() {
             )
           })}
 
-          <Button asChild size="lg" className="mt-7 w-full">
-            <Link href="/resume.pdf" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
-              <FileText />
-              View resume
-            </Link>
-          </Button>
+          <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            <Button asChild size="lg" className="w-full">
+              <a
+                href={siteConfig.documents.resume.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FileText />
+                Open resume
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full">
+              <a
+                href={siteConfig.documents.cv.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+              >
+                <Files />
+                Open full CV
+              </a>
+            </Button>
+          </div>
         </nav>
       </div>
     </header>

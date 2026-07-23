@@ -1,381 +1,305 @@
 #!/usr/bin/env python3
-"""Generate Shine Bo Bo's ATS-friendly portfolio resume PDF."""
+"""Generate Shine Bo Bo's one-page, Canva-style resume PDF."""
 
+from io import BytesIO
 from pathlib import Path
-from xml.sax.saxutils import escape
+from shutil import copy2
 
+from PIL import Image, ImageOps
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.lib.units import mm
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase.pdfmetrics import stringWidth
-from reportlab.platypus import (
-    HRFlowable,
-    KeepTogether,
-    PageBreak,
-    Paragraph,
-    SimpleDocTemplate,
-    Spacer,
-)
+from reportlab.pdfgen import canvas
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "output" / "pdf" / "shine-bo-bo-cv.pdf"
+OUTPUT = ROOT / "output" / "pdf" / "shine-bo-bo-resume.pdf"
+PUBLIC_OUTPUT = ROOT / "public" / "resume.pdf"
+PROFILE_IMAGE = ROOT / "public" / "images" / "profile.jpg"
 
+PAGE_WIDTH, PAGE_HEIGHT = A4
+SIDEBAR_WIDTH = 190
+HEADER_HEIGHT = 126
+INK = colors.HexColor("#181411")
 NAVY = colors.HexColor("#0F172A")
-BLUE = colors.HexColor("#2563EB")
+BLUE = colors.HexColor("#3B82F6")
 SLATE = colors.HexColor("#475569")
 MUTED = colors.HexColor("#64748B")
-LIGHT = colors.HexColor("#CBD5E1")
+SIDEBAR = colors.HexColor("#ECE7E3")
+WHITE = colors.white
+RULE = colors.HexColor("#C9C2BD")
 
 
-def build_styles():
-    base = getSampleStyleSheet()
-    return {
-        "name": ParagraphStyle(
-            "Name",
-            parent=base["Normal"],
-            fontName="Helvetica-Bold",
-            fontSize=23,
-            leading=25,
-            textColor=NAVY,
-            alignment=TA_CENTER,
-            spaceAfter=2,
-        ),
-        "tagline": ParagraphStyle(
-            "Tagline",
-            parent=base["Normal"],
-            fontName="Helvetica-Bold",
-            fontSize=10,
-            leading=13,
-            textColor=BLUE,
-            alignment=TA_CENTER,
-            spaceAfter=3,
-        ),
-        "contact": ParagraphStyle(
-            "Contact",
-            parent=base["Normal"],
-            fontName="Helvetica",
-            fontSize=8.1,
-            leading=11,
-            textColor=SLATE,
-            alignment=TA_CENTER,
-        ),
-        "section": ParagraphStyle(
-            "Section",
-            parent=base["Normal"],
-            fontName="Helvetica-Bold",
-            fontSize=10.2,
-            leading=12,
-            textColor=NAVY,
-            spaceBefore=5,
-            spaceAfter=2,
-        ),
-        "entry": ParagraphStyle(
-            "Entry",
-            parent=base["Normal"],
-            fontName="Helvetica",
-            fontSize=9.3,
-            leading=11.5,
-            textColor=NAVY,
-            spaceAfter=2,
-        ),
-        "body": ParagraphStyle(
-            "Body",
-            parent=base["Normal"],
-            fontName="Helvetica",
-            fontSize=8.45,
-            leading=11.1,
-            textColor=SLATE,
-            alignment=TA_LEFT,
-            spaceAfter=2,
-        ),
-        "bullet": ParagraphStyle(
-            "Bullet",
-            parent=base["Normal"],
-            fontName="Helvetica",
-            fontSize=8.25,
-            leading=10.7,
-            leftIndent=8,
-            firstLineIndent=-7,
-            textColor=SLATE,
-            spaceAfter=1.2,
-        ),
-        "small": ParagraphStyle(
-            "Small",
-            parent=base["Normal"],
-            fontName="Helvetica",
-            fontSize=7.7,
-            leading=10,
-            textColor=MUTED,
-        ),
-    }
+def wrap_lines(text, font_name, font_size, max_width):
+    words = text.split()
+    lines = []
+    current = ""
+    for word in words:
+        candidate = word if not current else f"{current} {word}"
+        if stringWidth(candidate, font_name, font_size) <= max_width:
+            current = candidate
+        else:
+            if current:
+                lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    return lines
 
 
-STYLES = build_styles()
+def draw_wrapped(pdf, text, x, y, max_width, font_name="Helvetica", font_size=8.2, leading=10.4, color=SLATE):
+    pdf.setFillColor(color)
+    pdf.setFont(font_name, font_size)
+    for line in wrap_lines(text, font_name, font_size, max_width):
+        pdf.drawString(x, y, line)
+        y -= leading
+    return y
 
 
-def section(story, title):
-    story.append(Paragraph(escape(title.upper()), STYLES["section"]))
-    story.append(HRFlowable(width="100%", thickness=0.7, color=BLUE, spaceBefore=0, spaceAfter=4))
+def draw_sidebar_heading(pdf, text, y):
+    x = 27
+    pdf.setFillColor(INK)
+    pdf.setFont("Helvetica-Bold", 10.3)
+    pdf.drawString(x, y, text.upper())
+    pdf.setStrokeColor(RULE)
+    pdf.setLineWidth(0.7)
+    pdf.line(x, y - 6, SIDEBAR_WIDTH - 18, y - 6)
+    return y - 18
 
 
-def entry(title, context, bullets, body=None):
-    blocks = [
-        Paragraph(
-            f"<b>{escape(title)}</b> <font color='#64748B'>| {escape(context)}</font>",
-            STYLES["entry"],
-        )
-    ]
-    if body:
-        blocks.append(Paragraph(escape(body), STYLES["body"]))
-    blocks.extend(Paragraph(f"- {escape(item)}", STYLES["bullet"]) for item in bullets)
-    blocks.append(Spacer(1, 2.2))
-    return KeepTogether(blocks)
+def draw_main_heading(pdf, text, y):
+    x = SIDEBAR_WIDTH + 20
+    right = PAGE_WIDTH - 22
+    pdf.setFillColor(NAVY)
+    pdf.setFont("Helvetica-Bold", 10.7)
+    pdf.drawString(x, y, text.upper())
+    pdf.setStrokeColor(colors.HexColor("#D6DCE6"))
+    pdf.setLineWidth(0.7)
+    pdf.line(x, y - 6, right, y - 6)
+    return y - 18
 
 
-def page_frame(canvas, doc):
-    canvas.saveState()
-    width, height = A4
-    canvas.setStrokeColor(BLUE)
-    canvas.setLineWidth(1.2)
-    canvas.line(16 * mm, height - 11 * mm, width - 16 * mm, height - 11 * mm)
-    canvas.setFillColor(MUTED)
-    canvas.setFont("Helvetica", 7.2)
-    canvas.drawString(16 * mm, 9 * mm, "Shine Bo Bo | Resume")
-    page_label = f"Page {doc.page}"
-    canvas.drawRightString(width - 16 * mm, 9 * mm, page_label)
-    canvas.restoreState()
+def draw_bullet(pdf, text, x, y, max_width, font_size=7.65, leading=9.4):
+    pdf.setFillColor(BLUE)
+    pdf.circle(x + 2, y + 2.2, 1.3, stroke=0, fill=1)
+    return draw_wrapped(pdf, text, x + 9, y, max_width - 9, "Helvetica", font_size, leading, SLATE) - 1
 
 
-def make_resume():
+def draw_entry(pdf, title, meta, bullets, y, x=None, width=None):
+    if x is None:
+        x = SIDEBAR_WIDTH + 20
+    if width is None:
+        width = PAGE_WIDTH - x - 22
+    pdf.setFillColor(NAVY)
+    pdf.setFont("Helvetica-Bold", 8.45)
+    for line in wrap_lines(title, "Helvetica-Bold", 8.45, width):
+        pdf.drawString(x, y, line)
+        y -= 10.2
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica-Oblique", 7.1)
+    for line in wrap_lines(meta, "Helvetica-Oblique", 7.1, width):
+        pdf.drawString(x, y, line)
+        y -= 8.6
+    y -= 1
+    for bullet in bullets:
+        y = draw_bullet(pdf, bullet, x, y, width)
+    return y - 4
+
+
+def circular_profile_image():
+    image = Image.open(PROFILE_IMAGE).convert("RGB")
+    fitted = ImageOps.fit(image, (800, 800), method=Image.Resampling.LANCZOS, centering=(0.5, 0.38))
+    buffer = BytesIO()
+    fitted.save(buffer, format="JPEG", quality=92)
+    buffer.seek(0)
+    return ImageReader(buffer), buffer
+
+
+def link_text(pdf, label, url, x, y, size=7.65, color=INK):
+    pdf.setFillColor(color)
+    pdf.setFont("Helvetica", size)
+    pdf.drawString(x, y, label)
+    width = stringWidth(label, "Helvetica", size)
+    pdf.linkURL(url, (x, y - 2, x + width, y + size + 1), relative=0)
+
+
+def build_resume():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    doc = SimpleDocTemplate(
-        str(OUTPUT),
-        pagesize=A4,
-        rightMargin=16 * mm,
-        leftMargin=16 * mm,
-        topMargin=16 * mm,
-        bottomMargin=15 * mm,
-        title="Shine Bo Bo - Resume",
-        author="Shine Bo Bo",
-        subject="Software and Digital Engineering internship resume",
-        creator="Shine Bo Bo portfolio",
-    )
+    PUBLIC_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    pdf = canvas.Canvas(str(OUTPUT), pagesize=A4)
+    pdf.setTitle("Shine Bo Bo - One-Page Resume")
+    pdf.setAuthor("Shine Bo Bo")
+    pdf.setSubject("Software and Digital Engineering internship resume")
+    pdf.setCreator("Shine Bo Bo portfolio")
 
-    story = []
-    story.append(Paragraph("SHINE BO BO", STYLES["name"]))
-    story.append(Paragraph("COMPUTER SCIENCE GRADUATE | THIRD-YEAR DIGITAL ENGINEERING STUDENT", STYLES["tagline"]))
-    story.append(
-        Paragraph(
-            "Kathu, Phuket, Thailand | +66 61 858 1574 | "
-            "<link href='mailto:shinebobo648@gmail.com' color='#2563EB'>shinebobo648@gmail.com</link>",
-            STYLES["contact"],
-        )
-    )
-    story.append(
-        Paragraph(
-            "<link href='https://portfolio-shinebobo.vercel.app' color='#2563EB'>portfolio-shinebobo.vercel.app</link> | "
-            "<link href='https://github.com/ShineBo' color='#2563EB'>github.com/ShineBo</link> | "
-            "<link href='https://www.linkedin.com/in/s02bb/' color='#2563EB'>linkedin.com/in/s02bb</link>",
-            STYLES["contact"],
-        )
-    )
-    story.append(Spacer(1, 6))
+    pdf.setFillColor(WHITE)
+    pdf.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, stroke=0, fill=1)
+    pdf.setFillColor(SIDEBAR)
+    pdf.rect(0, 0, SIDEBAR_WIDTH, PAGE_HEIGHT, stroke=0, fill=1)
+    pdf.setFillColor(INK)
+    pdf.rect(SIDEBAR_WIDTH, PAGE_HEIGHT - HEADER_HEIGHT, PAGE_WIDTH - SIDEBAR_WIDTH, HEADER_HEIGHT, stroke=0, fill=1)
 
-    section(story, "Professional Summary")
-    story.append(
-        Paragraph(
-            escape(
-                "Computer Science graduate and third-year Digital Engineering student with hands-on project experience across full-stack web applications, backend APIs, AI/ML prototypes, and IoT simulation. Combines project-based technical learning with international student leadership, cross-cultural workshops, and practical custom-PC and customer-service experience. Seeking software development, full-stack/backend, or digital engineering internship and junior opportunities."
-            ),
-            STYLES["body"],
-        )
-    )
+    photo_reader, photo_buffer = circular_profile_image()
+    photo_x = 39
+    photo_y = PAGE_HEIGHT - 130
+    photo_size = 112
+    pdf.saveState()
+    clip = pdf.beginPath()
+    clip.circle(photo_x + photo_size / 2, photo_y + photo_size / 2, photo_size / 2)
+    pdf.clipPath(clip, stroke=0, fill=0)
+    pdf.drawImage(photo_reader, photo_x, photo_y, photo_size, photo_size, preserveAspectRatio=True, mask="auto")
+    pdf.restoreState()
+    pdf.setStrokeColor(WHITE)
+    pdf.setLineWidth(4)
+    pdf.circle(photo_x + photo_size / 2, photo_y + photo_size / 2, photo_size / 2, stroke=1, fill=0)
+    photo_buffer.close()
 
-    section(story, "Education")
-    story.append(
-        entry(
-            "Bachelor of Engineering (Digital Engineering), International Program",
-            "Prince of Songkla University, Phuket Campus | 2024-Present | GPA 4.00",
-            [
-                "Third-year student in a project-based program spanning software, networks and security, computer architecture, electronics, IoT, project management, and quality assurance.",
-                "Outstanding Academic Performance Award recipient for academic year 2024, first-year Digital Engineering.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Bachelor of Science in Computer Science",
-            "Myanmar Institute of Theology, Liberal Arts Program | 2021-2025 | GPA 3.74",
-            [
-                "Built foundations in programming, software and web development, databases, operating systems, and computer systems.",
-                "Completed interdisciplinary study in English, Korean basics, management, economics, ethics, human rights, gender and social studies, counselling, religions, peace education, wellbeing, and civic life.",
-            ],
-        )
-    )
+    header_x = SIDEBAR_WIDTH + 20
+    pdf.setFillColor(WHITE)
+    pdf.setFont("Helvetica-Bold", 24)
+    pdf.drawString(header_x, PAGE_HEIGHT - 51, "SHINE BO BO")
+    pdf.setFont("Helvetica", 9.7)
+    pdf.setFillColor(colors.HexColor("#E5E7EB"))
+    pdf.drawString(header_x, PAGE_HEIGHT - 72, "COMPUTER SCIENCE GRADUATE | DIGITAL ENGINEERING STUDENT")
+    pdf.setFont("Helvetica", 8)
+    pdf.setFillColor(colors.HexColor("#AEB8C8"))
+    pdf.drawString(header_x, PAGE_HEIGHT - 91, "Software development | Full-stack/backend | Digital engineering")
 
-    section(story, "Project-Based Technical Skills")
-    skill_lines = [
-        ("Programming", "TypeScript, JavaScript, Python, Java, PHP, C++, SQL, HTML, CSS"),
-        ("Frameworks and interfaces", "React, Next.js, Tailwind CSS, Node.js, Express, NestJS, FastAPI, Flask, Spring Boot, Laravel, Streamlit"),
-        ("Data and machine learning", "PostgreSQL, MySQL, MongoDB/Mongoose, Sequelize, SQLAlchemy, pandas, scikit-learn, TensorFlow/Keras"),
-        ("IoT and workflow", "ESP32, MQTT, PlatformIO, Wokwi, Git, GitHub, Postman, Vercel"),
-        ("Hardware and foundations", "PC component selection, compatibility planning, custom PC assembly, troubleshooting; networking, cybersecurity, cryptography, and computer architecture coursework"),
+    left_y = PAGE_HEIGHT - 170
+    left_y = draw_sidebar_heading(pdf, "Contact", left_y)
+    contact_x = 27
+    link_text(pdf, "shinebobo648@gmail.com", "mailto:shinebobo648@gmail.com", contact_x, left_y)
+    left_y -= 18
+    link_text(pdf, "+66 61 858 1574", "tel:+66618581574", contact_x, left_y)
+    left_y -= 18
+    pdf.setFillColor(INK)
+    pdf.setFont("Helvetica", 7.65)
+    pdf.drawString(contact_x, left_y, "Phuket, Thailand")
+    left_y -= 18
+    link_text(pdf, "portfolio-shinebobo.vercel.app", "https://portfolio-shinebobo.vercel.app", contact_x, left_y, 7.2, BLUE)
+    left_y -= 16
+    link_text(pdf, "linkedin.com/in/s02bb", "https://www.linkedin.com/in/s02bb/", contact_x, left_y, 7.2, BLUE)
+    left_y -= 16
+    link_text(pdf, "github.com/ShineBo", "https://github.com/ShineBo", contact_x, left_y, 7.2, BLUE)
+    left_y -= 25
+
+    left_y = draw_sidebar_heading(pdf, "Education", left_y)
+    pdf.setFillColor(NAVY)
+    pdf.setFont("Helvetica-Bold", 8.1)
+    left_y = draw_wrapped(pdf, "B.Eng. in Digital Engineering", contact_x, left_y, 145, "Helvetica-Bold", 8.1, 9.6, NAVY)
+    left_y = draw_wrapped(pdf, "Prince of Songkla University, Phuket Campus", contact_x, left_y - 1, 145, "Helvetica", 7.35, 8.8, SLATE)
+    left_y = draw_wrapped(pdf, "2024-Present | Third year | GPA 4.00", contact_x, left_y - 1, 145, "Helvetica", 7.15, 8.6, MUTED)
+    left_y -= 9
+    left_y = draw_wrapped(pdf, "B.Sc. in Computer Science", contact_x, left_y, 145, "Helvetica-Bold", 8.1, 9.6, NAVY)
+    left_y = draw_wrapped(pdf, "Myanmar Institute of Theology, Liberal Arts Program", contact_x, left_y - 1, 145, "Helvetica", 7.35, 8.8, SLATE)
+    left_y = draw_wrapped(pdf, "2021-2025 | Graduated | GPA 3.74", contact_x, left_y - 1, 145, "Helvetica", 7.15, 8.6, MUTED)
+    left_y -= 18
+
+    left_y = draw_sidebar_heading(pdf, "Technical Skills", left_y)
+    skill_groups = [
+        ("Languages", "TypeScript, JavaScript, Python, Java, PHP, SQL, C++"),
+        ("Web and APIs", "React, Next.js, Tailwind CSS, Node.js, NestJS, Express, FastAPI, Flask"),
+        ("Data and ML", "PostgreSQL, MySQL, MongoDB, pandas, scikit-learn, TensorFlow/Keras"),
+        ("Tools and systems", "Git, GitHub, Postman, Vercel, PlatformIO, Wokwi, ESP32, MQTT"),
+        ("Hardware", "PC assembly, compatibility planning, diagnostics, troubleshooting"),
+        ("Coursework foundations", "Networking, cybersecurity, cryptography, computer architecture"),
     ]
-    for label, details in skill_lines:
-        story.append(
-            Paragraph(
-                f"<b>{escape(label)}:</b> {escape(details)}",
-                STYLES["body"],
-            )
-        )
-    story.append(Paragraph("Skills reflect project, coursework, or hands-on work exposure - not claims of professional mastery.", STYLES["small"]))
+    for label, value in skill_groups:
+        pdf.setFillColor(NAVY)
+        pdf.setFont("Helvetica-Bold", 7.4)
+        pdf.drawString(contact_x, left_y, label)
+        left_y -= 9
+        left_y = draw_wrapped(pdf, value, contact_x, left_y, 145, "Helvetica", 7.05, 8.55, SLATE)
+        left_y -= 6
 
-    section(story, "Experience")
-    story.append(
-        entry(
-            "President",
-            "PSU Phuket International Student Club | Current",
-            [
-                "Lead intercultural student engagement and coordinate with students and university stakeholders around club activities.",
-                "Represent international-student perspectives and encourage inclusive participation in campus life.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Research Intern - Flower Classification",
-            "Myanmar Institute of Theology, Liberal Arts Program | Jan-Jul 2025",
-            [
-                "Prepared five-class image data and trained and evaluated a MobileNetV2 transfer-learning workflow.",
-                "Documented results and built a Streamlit interface for prediction testing.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Freelance Gaming PC Buyer, Builder and Reseller",
-            "Self-Employed / Family Business | Jan 2022-Jul 2024",
-            [
-                "Matched parts to customer needs, budgets, and compatibility constraints; assembled systems and performed setup, diagnostics, and troubleshooting.",
-                "Handled sourcing, pricing, negotiation, customer communication, delivery, and basic after-sales support.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Logistics and Delegate Servicing Team Member",
-            "AIESEC in Myanmar | Feb 2022-Jan 2023",
-            [
-                "Supported youth-led events through logistics, delegate servicing, and participant-facing operations.",
-                "Collaborated across functions and adapted to changing on-site needs.",
-            ],
-        )
-    )
+    left_y = draw_sidebar_heading(pdf, "Languages", left_y)
+    left_y = draw_wrapped(pdf, "Burmese - Native", contact_x, left_y, 145, "Helvetica", 7.6, 10, SLATE)
+    left_y = draw_wrapped(pdf, "English - Fluent", contact_x, left_y - 1, 145, "Helvetica", 7.6, 10, SLATE)
+    draw_wrapped(pdf, "Korean - Basic coursework", contact_x, left_y - 1, 145, "Helvetica", 7.6, 10, SLATE)
 
-    story.append(PageBreak())
+    main_x = SIDEBAR_WIDTH + 20
+    main_width = PAGE_WIDTH - main_x - 22
+    main_y = PAGE_HEIGHT - HEADER_HEIGHT - 23
+    main_y = draw_main_heading(pdf, "Professional Summary", main_y)
+    summary = (
+        "Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with international student leadership and hands-on PC hardware and customer-support experience. Seeking a software development, backend/full-stack, or digital engineering internship."
+    )
+    main_y = draw_wrapped(pdf, summary, main_x, main_y, main_width, "Helvetica", 8.0, 10.2, SLATE) - 9
 
-    section(story, "Selected Projects")
-    story.append(
-        entry(
-            "Real Estate Management System",
-            "Team coursework | Next.js, TypeScript, NestJS, PostgreSQL, Sequelize, JWT | 2025",
-            [
-                "Contributed to buyer/dealer registration, role-based dashboards, authentication, property listings, and client/API integration across separate frontend and backend repositories.",
-            ],
-        )
+    main_y = draw_main_heading(pdf, "Selected Projects", main_y)
+    main_y = draw_entry(
+        pdf,
+        "Real Estate Management System",
+        "Team project | Next.js, TypeScript, NestJS, PostgreSQL, JWT | 2025",
+        ["Contributed to registration, role-based dashboards, authentication, property listings, and frontend-API integration across separate team repositories."],
+        main_y,
     )
-    story.append(
-        entry(
-            "Cupidy",
-            "External contributor | Python, FastAPI, SQLAlchemy, PostgreSQL, JWT | 2024",
-            [
-                "Contributed 25 GitHub-attributed commits covering signup/sign-in, user details, photo upload, matching, likes, schemas, models, repositories, and database setup.",
-            ],
-        )
+    main_y = draw_entry(
+        pdf,
+        "Cupidy",
+        "External contributor | FastAPI, SQLAlchemy, PostgreSQL, JWT | 2024",
+        ["Contributed 25 GitHub-attributed commits covering accounts, profiles, photo upload, matching, likes, schemas, repository functions, and database setup."],
+        main_y,
     )
-    story.append(
-        entry(
-            "Movie Recommendation Prototype",
-            "External contributor | React, Flask, pandas, scikit-learn, Streamlit | 2024",
-            [
-                "Contributed eight public implementation commits spanning content-based recommendation experiments, Flask integration, React result/detail flows, and a Streamlit test interface.",
-            ],
-        )
+    main_y = draw_entry(
+        pdf,
+        "Movie Recommendation Prototype",
+        "External contributor | React, Flask, pandas, scikit-learn | 2024",
+        ["Contributed eight public implementation commits across recommendation experiments, Flask integration, React result/detail flows, and a Streamlit test interface."],
+        main_y,
     )
-    story.append(
-        entry(
-            "Portfolio Website",
-            "Owner | Next.js, React, TypeScript, Tailwind CSS, Framer Motion, Vercel | 2026",
-            [
-                "Designed and deployed a responsive, data-driven portfolio with accessible interactions, motion preferences, theming, metadata, and documented project evidence.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Flower Classification Research Prototype",
-            "Owner | Python, TensorFlow, MobileNetV2, Streamlit, OpenCV | 2025",
-            [
-                "Built a five-class transfer-learning workflow with preprocessing, model checkpoints, evaluation visualizations, and a small inference interface.",
-            ],
-        )
-    )
-    story.append(
-        entry(
-            "Smart HVAC IoT Controller",
-            "Owner | C++, ESP32, PlatformIO, Wokwi, MQTT, DHT22 | 2025",
-            [
-                "Implemented COOL, HEAT, and IDLE states, automatic/manual modes, temperature hysteresis, and MQTT publishing in a repeatable ESP32 simulation.",
-            ],
-        )
+    main_y = draw_entry(
+        pdf,
+        "Portfolio Website",
+        "Owner | Next.js, React, TypeScript, Tailwind CSS, Vercel | 2026",
+        ["Designed and deployed a responsive, data-driven portfolio with accessible interactions, theming, metadata, and documented project evidence."],
+        main_y,
     )
 
-    section(story, "Leadership and Activities")
-    story.append(
-        entry(
-            "Selected PSU Delegate - Asian Undergraduate Symposium 2026",
-            "NUS College, Singapore | 6-18 Jul 2026",
-            [
-                "Represented PSU's College of Computing in the 'Communities in Action' regional program with undergraduates from across Asia.",
-            ],
-        )
+    main_y = draw_main_heading(pdf, "Experience", main_y - 2)
+    main_y = draw_entry(
+        pdf,
+        "Research Intern - Flower Classification",
+        "Myanmar Institute of Theology, Liberal Arts Program | Jan-Jul 2025",
+        ["Prepared five-class image data, trained and evaluated a MobileNetV2 workflow, documented results, and built a Streamlit prediction interface."],
+        main_y,
     )
-    story.append(
-        entry(
-            "JASSO-Supported Participant - Asia Design Global Workshop 2025",
-            "Shibaura Institute of Technology, Tokyo | 31 Jul-7 Aug 2025",
-            [
-                "Collaborated in a multicultural design team through ideation, field research, proposal/model development, and final presentation work.",
-            ],
-        )
+    main_y = draw_entry(
+        pdf,
+        "Freelance Gaming PC Buyer, Builder and Reseller",
+        "Self-Employed / Family Business | Jan 2022-Jul 2024",
+        ["Advised customers on budgets and compatibility; sourced parts, assembled systems, performed diagnostics and troubleshooting, and provided basic after-sales support."],
+        main_y,
     )
-    story.append(
-        entry(
-            "Data Analysis and Visualization Workshops",
-            "PSU Phuket with SIT, Sojo, OMU and Shunan | 2024 and 2025",
-            [
-                "Joined two international short-term exchanges combining data work, English-language collaboration, presentations, and cultural exchange.",
-            ],
-        )
-    )
-    story.append(
-        Paragraph(
-            "<b>Additional engagement:</b> 230 recorded PSU activity hours (100 required); supporting actor and video editor for the MIT One Billion Rising project; guest speaker for AIESEC's 'Youth &amp; Mental Health' podcast for World Mental Health Day 2023; local youth-community volunteer.",
-            STYLES["body"],
-        )
+    main_y = draw_entry(
+        pdf,
+        "Logistics and Delegate Servicing Team Member",
+        "AIESEC in Myanmar | Volunteer Experience | Feb 2022-Jan 2023",
+        ["Supported youth-led events through logistics, delegate servicing, coordination, and participant-facing operations."],
+        main_y,
     )
 
-    section(story, "Languages")
-    story.append(Paragraph("<b>Burmese:</b> Native | <b>English:</b> Fluent | <b>Korean:</b> Basic coursework", STYLES["body"]))
+    main_y = draw_main_heading(pdf, "Leadership and Recognition", main_y - 1)
+    highlights = [
+        "President, PSU Phuket International Student Club | Current",
+        "PSU Delegate, Asian Undergraduate Symposium 2026 | NUS College, Singapore",
+        "JASSO-supported participant, Asia Design Global Workshop 2025 | Tokyo",
+        "Outstanding Academic Performance Award | PSU, academic year 2024",
+        "230 recorded PSU activity hours | 100 required for graduation",
+    ]
+    for item in highlights:
+        main_y = draw_bullet(pdf, item, main_x, main_y, main_width, 7.55, 9.2)
 
-    doc.build(story, onFirstPage=page_frame, onLaterPages=page_frame)
+    pdf.setFillColor(MUTED)
+    pdf.setFont("Helvetica-Oblique", 6.8)
+    pdf.drawRightString(PAGE_WIDTH - 22, 17, "Detailed CV and project evidence available through the portfolio.")
+    pdf.save()
+    copy2(OUTPUT, PUBLIC_OUTPUT)
     return OUTPUT
 
 
 if __name__ == "__main__":
-    generated = make_resume()
-    width = stringWidth(generated.name, "Helvetica", 8)
-    print(f"Generated {generated} ({width:.1f}pt filename width)")
+    generated = build_resume()
+    print(f"Generated {generated}")
+    print(f"Published {PUBLIC_OUTPUT}")

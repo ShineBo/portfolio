@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowUpRight, BriefcaseBusiness, Code2, FileText, Mail, MessageSquareText } from "lucide-react"
+import { ArrowUpRight, BriefcaseBusiness, Code2, FileText, Files, Mail, MessageSquareText } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
 import { PageHero } from "@/components/shared/page-hero"
@@ -35,13 +35,6 @@ const contactMethods = [
     label: "Connect on LinkedIn",
     icon: BriefcaseBusiness,
   },
-  {
-    title: "Resume",
-    description: "A concise overview of my education, capabilities, projects, and experience.",
-    href: "/resume.pdf",
-    label: "Open resume PDF",
-    icon: FileText,
-  },
 ]
 
 export default function ContactPage() {
@@ -52,7 +45,7 @@ export default function ContactPage() {
         title="Ready to learn fast—and contribute thoughtfully."
         description="I am open to software development, full-stack, backend, Digital Engineering, and practical technology internships or junior opportunities. I also welcome thoughtful collaborations."
       >
-        <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button asChild size="lg">
             <Link href={`mailto:${siteConfig.email}`}>
               <Mail />
@@ -60,10 +53,16 @@ export default function ContactPage() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/resume.pdf" target="_blank" rel="noreferrer">
+            <a href={siteConfig.documents.resume.href} target="_blank" rel="noopener noreferrer">
               <FileText />
               View resume
-            </Link>
+            </a>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <a href={siteConfig.documents.cv.href} target="_blank" rel="noopener noreferrer">
+              <Files />
+              View CV
+            </a>
           </Button>
         </div>
       </PageHero>
@@ -75,7 +74,7 @@ export default function ContactPage() {
               <Link
                 href={href}
                 target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                rel={href.startsWith("http") || href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
                 className="focus-ring group interactive-card glass-panel flex h-full flex-col rounded-3xl p-7 transition-all duration-500 sm:p-8"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -90,6 +89,44 @@ export default function ContactPage() {
               </Link>
             </Reveal>
           ))}
+
+          <Reveal delay={0.06} className="h-full">
+            <article className="glass-panel flex h-full flex-col rounded-3xl p-7 sm:p-8">
+              <div className="flex items-start justify-between gap-4">
+                <span className="grid size-12 place-items-center rounded-2xl bg-primary/10 text-primary">
+                  <Files className="size-5" />
+                </span>
+                <span className="rounded-full border border-border/70 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                  Two formats
+                </span>
+              </div>
+              <h2 className="mt-8 text-2xl font-bold tracking-[-0.04em]">Application documents</h2>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                Choose the concise one-page resume for quick applications or the detailed CV for a fuller record of my work and activities.
+              </p>
+              <div className="mt-7 grid gap-3 border-t border-border/60 pt-5 sm:grid-cols-2">
+                {Object.values(siteConfig.documents).map((document, index) => {
+                  const Icon = index === 0 ? FileText : Files
+
+                  return (
+                    <a
+                      key={document.href}
+                      href={document.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="focus-ring group flex items-center justify-between gap-3 rounded-2xl border border-border/70 bg-background/60 px-4 py-3 text-sm font-semibold transition-all hover:border-primary/30 hover:text-primary"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Icon className="size-4" />
+                        {document.shortLabel}
+                      </span>
+                      <ArrowUpRight className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </a>
+                  )
+                })}
+              </div>
+            </article>
+          </Reveal>
         </div>
 
         <Reveal className="mt-12 grid gap-8 rounded-3xl bg-secondary/70 p-7 sm:p-10 lg:grid-cols-[auto_1fr] lg:items-start">

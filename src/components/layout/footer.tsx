@@ -1,11 +1,13 @@
 import Link from "next/link"
-import { ArrowUpRight, BriefcaseBusiness, Code2, Mail } from "lucide-react"
+import { ArrowUpRight, BriefcaseBusiness, Code2, FileText, Files, Mail } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
 
 const links = [
   { label: "GitHub", href: siteConfig.links.github, icon: Code2 },
   { label: "LinkedIn", href: siteConfig.links.linkedin, icon: BriefcaseBusiness },
+  { label: "Resume", href: siteConfig.documents.resume.href, icon: FileText },
+  { label: "CV", href: siteConfig.documents.cv.href, icon: Files },
   { label: "Email", href: `mailto:${siteConfig.email}`, icon: Mail },
 ]
 
@@ -28,8 +30,8 @@ export function Footer() {
               <Link
                 key={label}
                 href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noreferrer" : undefined}
+                target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
+                rel={href.startsWith("http") || href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
                 className="focus-ring group inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/60 px-4 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary"
               >
                 <Icon className="size-4" />

@@ -10,6 +10,20 @@ export const siteConfig = {
     github: "https://github.com/ShineBo",
     linkedin: "https://www.linkedin.com/in/s02bb/",
   },
+  documents: {
+    resume: {
+      label: "One-page resume",
+      shortLabel: "Resume",
+      href: "/resume.pdf",
+      description: "A concise application overview for quick review.",
+    },
+    cv: {
+      label: "Detailed CV",
+      shortLabel: "CV",
+      href: "/cv.pdf",
+      description: "Expanded education, projects, experience, and activities.",
+    },
+  },
   keywords: [
     "Shine Bo Bo",
     "Computer Science",

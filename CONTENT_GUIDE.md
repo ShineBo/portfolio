@@ -16,7 +16,9 @@ Most repeatable content lives in the `src/data` directory. Update the data file 
 | Longer personal story and focus areas | `src/app/about/page.tsx` |
 | Profile photo | `public/images/profile.jpg` |
 | Social sharing image | `public/og.png` |
-| Downloadable CV content | `scripts/generate_resume.py` |
+| One-page resume content | `scripts/generate_resume.py` |
+| Detailed CV content and editable DOCX | `scripts/generate_cv.py` |
+| Canva and LinkedIn copy | `CAREER_DOCUMENTS_GUIDE.md` |
 
 ## Common future updates
 
@@ -29,11 +31,12 @@ The short third-year/GPA summary also appears in a few presentation files. Searc
 - `src/components/sections/hero-section.tsx` for the homepage introduction and GPA statistic.
 - `src/app/about/page.tsx` for the longer biography.
 - `src/config/site.ts` for the search/social description.
-- `scripts/generate_resume.py` for the downloadable CV, then regenerate and copy the PDF as described below.
+- `scripts/generate_resume.py` for the one-page resume.
+- `scripts/generate_cv.py` for the detailed CV and editable DOCX.
 
 ### Update activity hours
 
-Change the canonical figures in `src/data/activities.ts`. The Activities page reads those values directly. Also update the homepage statistic in `src/components/sections/hero-section.tsx`, the leadership evidence in `src/data/skills.ts`, and the CV text in `scripts/generate_resume.py`.
+Change the canonical figures in `src/data/activities.ts`. The Activities page reads those values directly. Also update the homepage statistic in `src/components/sections/hero-section.tsx`, the leadership evidence in `src/data/skills.ts`, and the document text in both `scripts/generate_resume.py` and `scripts/generate_cv.py`.
 
 ### Add an activity
 
@@ -65,24 +68,31 @@ Edit `src/data/skills.ts` and choose the evidence label that matches reality:
 
 This evidence system is intentionally more credible than percentages or labels such as "expert."
 
-## Regenerate the CV
+## Regenerate the resume and CV
 
-The website downloads `public/resume.pdf`. The editable source is `scripts/generate_resume.py`, and the archival output is `output/pdf/shine-bo-bo-cv.pdf`.
+The website keeps two stable public files:
 
-After editing the script, run:
+- `public/resume.pdf` is the concise one-page resume.
+- `public/cv.pdf` is the detailed CV.
+
+The resume source is `scripts/generate_resume.py`. The CV source is `scripts/generate_cv.py`, which also produces an editable Word copy at `output/docx/shine-bo-bo-cv.docx`.
+
+After editing either script, run:
 
 ```bash
 python3 scripts/generate_resume.py
-cp output/pdf/shine-bo-bo-cv.pdf public/resume.pdf
+python3 scripts/generate_cv.py
 ```
 
-The script requires ReportLab. If it is not installed in your Python environment:
+The scripts publish their PDF files into `public` automatically. They require ReportLab, Pillow, and python-docx. If they are not installed in your Python environment:
 
 ```bash
-python3 -m pip install reportlab
+python3 -m pip install reportlab pillow python-docx
 ```
 
-The CV currently includes your phone number and Kathu/Phuket location because they were already present in the public PDF. Remove or change those lines in `scripts/generate_resume.py` if you prefer less public contact information.
+When you finish editing the visual resume in Canva, export it as `Shine-Bo-Bo-Resume.pdf` and replace only `public/resume.pdf`. Do not overwrite `public/cv.pdf`.
+
+Both documents currently include your public phone number and Phuket location. Remove or change those details in the scripts and Canva file if you prefer less public contact information.
 
 ## Check before deploying
 
@@ -94,7 +104,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-Then open the important pages at desktop and mobile widths: `/`, `/projects`, `/skills`, `/experience`, `/education`, `/activities`, and `/contact`. Also open `/resume.pdf` and test its links.
+Then open the important pages at desktop and mobile widths: `/`, `/projects`, `/skills`, `/experience`, `/education`, `/activities`, and `/contact`. Also open `/resume.pdf` and `/cv.pdf` and test their links.
 
 If this repository remains connected to Vercel, pushing the final commit to the configured production branch should trigger a new deployment.
 
