@@ -43,7 +43,10 @@ PROFILE = (
     "Computer Science graduate and third-year Digital Engineering student with project-based "
     "experience across full-stack web applications, backend APIs, AI/ML prototypes, IoT simulation, "
     "and practical PC hardware work. I combine technical learning with international student "
-    "leadership, cross-cultural collaboration, and customer-facing problem-solving. I am seeking "
+    "leadership, cross-cultural collaboration, and customer-facing problem-solving. International "
+    "exchanges and community activities have strengthened my interest in people-centred technology "
+    "and small, practical contributions that support sustainable innovation, cultural understanding, "
+    "inclusion, and wellbeing. I am seeking "
     "software development, full-stack/backend, or digital engineering internship and junior opportunities."
 )
 
@@ -73,8 +76,16 @@ SKILLS = [
     ("APIs and backend", "Node.js, Express, NestJS, FastAPI, Flask, Spring Boot, Laravel, REST APIs, authentication flows"),
     ("Data and AI/ML", "PostgreSQL, MySQL, MongoDB/Mongoose, Sequelize, SQLAlchemy, pandas, scikit-learn, TensorFlow/Keras, OpenCV, Streamlit"),
     ("IoT and workflow", "ESP32, MQTT, PlatformIO, Wokwi, Git, GitHub, Postman, npm, Vercel"),
-    ("PC hardware", "Component selection, compatibility planning, custom PC assembly, diagnostics, troubleshooting, sourcing, resale, and basic after-sales support"),
+    ("Hardware and resale", "PC component selection, compatibility planning, custom PC assembly, diagnostics, troubleshooting, and PC, camera, and lens sourcing, resale, and basic after-sales support"),
     ("Coursework foundations", "Networking, cybersecurity, cryptography, computer architecture, operating systems, systems thinking, and engineering design"),
+]
+
+CORE_STRENGTHS = [
+    "Inclusive leadership and coordination",
+    "Cross-cultural collaboration",
+    "Communication and customer awareness",
+    "Practical problem-solving and adaptability",
+    "Social awareness and empathy",
 ]
 
 EXPERIENCE = [
@@ -95,11 +106,12 @@ EXPERIENCE = [
         ],
     },
     {
-        "title": "Freelance Gaming PC Buyer, Builder and Reseller",
-        "meta": "Self-Employed / Family Business | Jan 2022-Jul 2024",
+        "title": "Family Business Assistant | Freelance PC Builder and PC, Camera and Lens Reseller",
+        "meta": "Family business support and self-employed work | Jan 2022-Jul 2024",
         "bullets": [
-            "Matched components to customer needs, budgets, and compatibility constraints; sourced parts, assembled systems, and performed setup, diagnostics, and troubleshooting.",
-            "Handled pricing, negotiation, customer communication, delivery, and basic after-sales support while assisting with day-to-day family-business operations.",
+            "Assisted with daily family-business operations, including customer service, purchasing and sales, deliveries, cash handling, basic expense tracking, order coordination, and price negotiation.",
+            "Independently sourced, bought, and resold PCs, computer components, cameras, and lenses; assessed customer needs, budgets, product condition, and compatibility where applicable.",
+            "Assembled custom PCs and performed setup, diagnostics, and troubleshooting while managing customer communication, delivery, and basic after-sales support.",
         ],
     },
     {
@@ -193,14 +205,19 @@ LEARNING_ARCHIVE = (
 )
 
 ACTIVITIES = [
-    "PSU Delegate, Asian Undergraduate Symposium 2026 - NUS College, Singapore, 6-18 Jul 2026; represented PSU's College of Computing in the Communities in Action regional program.",
+    "PSU Delegate, Asian Undergraduate Symposium 2026 - NUS College, Singapore, 6-18 Jul 2026; joined the Communities in Action regional program focused on sustainability and innovation, inclusivity and resilience, and heritage and culture.",
     "JASSO-Supported Participant, Asia Design Global Workshop 2025 - Shibaura Institute of Technology, Tokyo, 31 Jul-7 Aug 2025; collaborated through ideation, field research, proposal/model development, and final presentation work.",
-    "Participant, cross-cultural Data Analysis and Visualization Workshops at PSU Phuket with SIT, Sojo University, Osaka Metropolitan University, and Shunan University in 2024 and 2025.",
+    "Participant, cross-cultural Data Analysis and Visualization Workshops at PSU Phuket with SIT, Sojo University, Osaka Metropolitan University, and Shunan University in 2024 and 2025; connected data practice with cultural exchange, local context, and wellbeing-focused learning.",
     "Supporting Actor and Video Editor, One Billion Rising gender-equality project at Myanmar Institute of Theology.",
     "Guest Speaker, AIESEC in Myanmar Youth and Mental Health podcast for World Mental Health Day 2023.",
     "Youth community volunteer supporting local youth-led activities and informal community initiatives.",
     "Completed 230 recorded PSU activity hours, compared with the 100-hour undergraduate graduation requirement.",
 ]
+
+PROFESSIONAL_INTERESTS = (
+    "People-centred digital systems, sustainable and responsible innovation, cross-cultural collaboration, "
+    "inclusive communities, youth wellbeing and mental-health awareness, and practical technology for positive local impact."
+)
 
 DEVELOPMENT_FOCUS = [
     "Full-stack architecture and system-design fundamentals",
@@ -416,27 +433,26 @@ def build_docx():
         details_run = paragraph.add_run(details)
         set_docx_font(details_run, size=9.1, color=SLATE)
 
+    document.add_heading("Core Strengths", level=1)
+    strengths = document.add_paragraph()
+    strengths_run = strengths.add_run(" | ".join(CORE_STRENGTHS))
+    set_docx_font(strengths_run, size=9.1, color=SLATE)
+
     document.add_heading("Experience and Leadership", level=1)
     for item in EXPERIENCE[:2]:
         docx_entry(document, item["title"], item["meta"], item["bullets"])
 
-    document.add_page_break()
-
-    document.add_heading("Experience and Leadership - Continued", level=1)
+    continued_heading = document.add_heading("Experience and Leadership - Continued", level=1)
+    continued_heading.paragraph_format.page_break_before = True
     for item in EXPERIENCE[2:]:
         docx_entry(document, item["title"], item["meta"], item["bullets"])
 
     document.add_heading("Selected Technical Projects", level=1)
-    for item in PROJECTS[:7]:
+    for item in PROJECTS:
         docx_entry(document, item["title"], item["meta"], [item["text"]], item["url"])
 
-    document.add_page_break()
-
-    document.add_heading("Selected Technical Projects - Continued", level=1)
-    for item in PROJECTS[7:]:
-        docx_entry(document, item["title"], item["meta"], [item["text"]], item["url"])
-
-    document.add_heading("Additional Project Work", level=1)
+    additional_heading = document.add_heading("Additional Project Work", level=1)
+    additional_heading.paragraph_format.page_break_before = True
     for item in ADDITIONAL_PROJECTS:
         docx_bullet(document, item)
     archive_note = document.add_paragraph(LEARNING_ARCHIVE)
@@ -448,7 +464,12 @@ def build_docx():
         docx_bullet(document, item)
 
     document.add_heading("Languages", level=1)
-    document.add_paragraph("Burmese - Native | English - Fluent | Korean - Basic coursework")
+    document.add_paragraph(
+        "Burmese - Native | English - Fluent | Thai - Basic (currently learning) | Korean - Basic coursework"
+    )
+
+    document.add_heading("Professional and Social Interests", level=1)
+    document.add_paragraph(PROFESSIONAL_INTERESTS)
 
     document.add_heading("Current Development Focus", level=1)
     for item in DEVELOPMENT_FOCUS:
@@ -651,6 +672,9 @@ def build_pdf():
             )
         )
 
+    pdf_section(story, "Core Strengths")
+    story.append(Paragraph(escape(" | ".join(CORE_STRENGTHS)), PDF_STYLES["body"]))
+
     pdf_section(story, "Experience and Leadership")
     for item in EXPERIENCE[:2]:
         story.append(pdf_entry(item["title"], item["meta"], item["bullets"]))
@@ -661,14 +685,10 @@ def build_pdf():
         story.append(pdf_entry(item["title"], item["meta"], item["bullets"]))
 
     pdf_section(story, "Selected Technical Projects")
-    for item in PROJECTS[:7]:
+    for item in PROJECTS:
         story.append(pdf_entry(item["title"], item["meta"], [item["text"]], item["url"]))
 
     story.append(PageBreak())
-    pdf_section(story, "Selected Technical Projects - Continued")
-    for item in PROJECTS[7:]:
-        story.append(pdf_entry(item["title"], item["meta"], [item["text"]], item["url"]))
-
     pdf_section(story, "Additional Project Work")
     for item in ADDITIONAL_PROJECTS:
         story.append(Paragraph(escape(item), PDF_STYLES["bullet"], bulletText="-"))
@@ -679,7 +699,15 @@ def build_pdf():
         story.append(Paragraph(escape(item), PDF_STYLES["bullet"], bulletText="-"))
 
     pdf_section(story, "Languages")
-    story.append(Paragraph("Burmese - Native | English - Fluent | Korean - Basic coursework", PDF_STYLES["body"]))
+    story.append(
+        Paragraph(
+            "Burmese - Native | English - Fluent | Thai - Basic (currently learning) | Korean - Basic coursework",
+            PDF_STYLES["body"],
+        )
+    )
+
+    pdf_section(story, "Professional and Social Interests")
+    story.append(Paragraph(escape(PROFESSIONAL_INTERESTS), PDF_STYLES["body"]))
 
     pdf_section(story, "Current Development Focus")
     for item in DEVELOPMENT_FOCUS:

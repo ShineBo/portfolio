@@ -35,16 +35,16 @@ export const experiences: Experience[] = [
     ],
   },
   {
-    role: "Freelance Gaming PC Buyer, Builder & Reseller",
-    organization: "Self-Employed / Family Business",
-    type: "Freelance & Customer Experience",
+    role: "Family Business Assistant | Freelance PC Builder & PC/Camera Reseller",
+    organization: "Family business support and self-employed work",
+    type: "Operations, Freelance & Customer Experience",
     period: "Jan 2022 – Jul 2024",
     description:
-      "Advised customers, sourced parts, assembled custom gaming PCs, and bought and resold computers and components while supporting day-to-day family-business operations.",
+      "Combined two concurrent responsibilities: supporting daily family-business operations and independently buying, building, and reselling PCs alongside cameras and lenses.",
     highlights: [
-      "Matched components to customer needs, budgets, and hardware-compatibility constraints",
-      "Assembled systems and performed practical setup, diagnostics, and troubleshooting",
-      "Handled sourcing, pricing, negotiation, customer communication, delivery, and basic after-sales support",
+      "Assisted with customer service, buying and selling, deliveries, cash handling, expense tracking, order coordination, and price negotiation",
+      "Independently sourced and resold PCs, components, cameras, and lenses while assessing customer needs, budgets, product condition, and compatibility where applicable",
+      "Built custom PCs, performed setup, diagnostics, and troubleshooting, and managed delivery and basic after-sales support",
     ],
   },
   {

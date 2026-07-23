@@ -1,4 +1,4 @@
-# Resume, CV, Canva, and LinkedIn guide
+# Resume, CV, and LinkedIn guide
 
 This guide keeps four public career surfaces aligned:
 
@@ -15,19 +15,21 @@ Use the **detailed CV** when an application asks for a CV, when education and ac
 
 For strict applicant-tracking systems, the detailed CV's single-column structure is safer than the designed two-column Canva resume.
 
-## Canva resume: what to fix
+## What changed from the original Canva resume
 
 The original Canva design is visually presentable, but the old copy has several problems:
 
 - Replace `Student, Fresh Graduate`; it is vague and does not explain the current degree.
 - Remove the old About Me paragraph. It contains grammar errors and unsupported generic claims.
 - Put experience in reverse chronological order.
-- Replace the generic soft-skill list with technical categories and evidence.
+- Replace the generic soft-skill list with technical categories plus a short, evidence-backed strengths section.
 - Add selected projects; these are the strongest evidence for an internship candidate.
 - Show the actual portfolio, LinkedIn, and GitHub addresses instead of `Profile Link` labels.
 - Reduce the photo slightly so projects have enough room.
 
-## Canva resume: paste-ready content
+## One-page resume source content
+
+The generated one-page resume now uses this content directly. You no longer need to maintain a separate Canva copy unless you want a future visual variation.
 
 ### Header
 
@@ -50,7 +52,7 @@ linkedin.com/in/s02bb
 github.com/ShineBo
 ```
 
-Add these Canva link actions:
+Use these PDF link actions:
 
 - Email: `mailto:shinebobo648@gmail.com`
 - Phone: `tel:+66618581574`
@@ -62,7 +64,7 @@ Add these Canva link actions:
 
 Rename `About Me` to `PROFESSIONAL SUMMARY` and use:
 
-> Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with international student leadership and hands-on PC hardware and customer-support experience. Seeking a software development, backend/full-stack, or digital engineering internship.
+> Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with cross-cultural leadership, hands-on hardware and customer work, and an interest in people-centred innovation, sustainability, inclusion, and wellbeing. Seeking a software development, backend/full-stack, or digital engineering internship.
 
 ### Education
 
@@ -95,8 +97,8 @@ PostgreSQL, MySQL, MongoDB, pandas, scikit-learn, TensorFlow/Keras
 Tools & Systems
 Git, GitHub, Postman, Vercel, PlatformIO, Wokwi, ESP32, MQTT
 
-Hardware
-PC assembly, compatibility planning, diagnostics, troubleshooting
+Hardware & Resale
+PC assembly, compatibility planning, diagnostics; PC, camera, and lens sourcing and resale
 
 Coursework Foundations
 Networking, cybersecurity, cryptography, computer architecture
@@ -104,11 +106,23 @@ Networking, cybersecurity, cryptography, computer architecture
 
 Do not use percentages, stars, skill bars, `expert`, or `fluent` for technical skills.
 
+### Core Strengths
+
+```text
+Cross-cultural collaboration
+Practical problem-solving
+Communication and customer awareness
+Adaptability and self-directed learning
+```
+
+These are grounded in student leadership, international programs, customer-facing work, hardware troubleshooting, research, and team projects. Avoid unsupported labels such as `expert communicator` or `natural leader`.
+
 ### Languages
 
 ```text
 Burmese - Native
 English - Fluent
+Thai - Basic (currently learning)
 Korean - Basic coursework
 ```
 
@@ -149,10 +163,12 @@ Myanmar Institute of Theology, Liberal Arts Program | Jan-Jul 2025
 
 > Prepared image data across five categories, trained and evaluated a MobileNetV2 transfer-learning workflow, documented results, and built a Streamlit prediction interface.
 
-**Freelance Gaming PC Buyer, Builder & Reseller**  
-Self-Employed / Family Business | Jan 2022-Jul 2024
+**Family Business Assistant | Freelance PC Builder and PC, Camera and Lens Reseller**
+Family business support and self-employed work | Jan 2022-Jul 2024
 
-> Advised customers on budgets and compatibility; sourced parts, assembled systems, performed diagnostics and troubleshooting, and provided basic after-sales support.
+> Supported customer service, buying and selling, deliveries, cash handling, expense tracking, orders, and price negotiation for a family business.
+>
+> Independently sourced and resold PCs, components, cameras, and lenses; built and troubleshot custom PCs and provided basic after-sales support.
 
 **Logistics & Delegate Servicing Team Member**  
 AIESEC in Myanmar | Feb 2022-Jan 2023
@@ -173,7 +189,15 @@ Outstanding Academic Performance Award | PSU, Academic Year 2024
 
 If only three lines fit, remove the activity-hours line and the Tokyo line first. Both remain in the detailed CV.
 
-## Canva layout settings
+### Professional and Social Interests for the CV
+
+```text
+People-centred digital systems, sustainable and responsible innovation, cross-cultural collaboration, inclusive communities, youth wellbeing and mental-health awareness, and practical technology for positive local impact.
+```
+
+This language is intentionally framed as a developing interest, not professional sustainability or mental-health expertise. It is grounded in the [AUS 2026 Communities in Action themes](https://aus-summer.nus.edu.sg/), the [PSU data-analysis and visualization exchange](https://www.computing.psu.ac.th/en/9467/coc-and-fte-psu-phuket-organized-the-student-exchange-program-on-data-science-and-digital-technology-collaborated-with-universities-from-japan/), the [Asia Design Global Workshop participation record](https://computing.psu.ac.th/th/27878/), AIESEC activities, liberal-arts coursework, and community work.
+
+## One-page resume layout settings
 
 - Keep A4 portrait.
 - Use approximately 32-34% of the width for the sidebar and 66-68% for the main column.
@@ -184,15 +208,9 @@ If only three lines fit, remove the activity-hours line and the Tokyo line first
 - Use one evidence-based bullet per project and experience entry.
 - Keep dates consistent: `2024-Present`, `Jan-Jul 2025`, and `2021-2025`.
 - Leave comfortable bottom padding; do not let the final entry touch the page edge.
-- Use one text box per complete entry where possible so Canva's reading order is easier to manage.
 - Make email, phone, portfolio, LinkedIn, and GitHub clickable.
 - Export as PDF Standard with flattening disabled, no crop marks, and selectable text.
 - Use the filename `Shine-Bo-Bo-Resume.pdf`.
-
-Consider keeping two Canva versions:
-
-- A designed version with the photo for direct emails, networking, and career fairs.
-- A simpler one-column, no-photo version for strict ATS portals.
 
 ## Resume project swaps by role
 
@@ -252,9 +270,9 @@ Paste and personalize this:
 >
 > My technical skills come from coursework, personal and team projects, research, and hands-on work - not claims of professional mastery. I am especially interested in understanding how interfaces, APIs, data, networks, and hardware fit together, and I am currently strengthening my foundations in system design, cybersecurity, cryptography, deployment, and code quality.
 >
-> Outside software, I serve as President of the PSU Phuket International Student Club, represented PSU at the Asian Undergraduate Symposium 2026 at NUS College, joined a JASSO-supported design workshop at Shibaura Institute of Technology in Tokyo, and participated in international data-analysis and visualization workshops. I have also accumulated 230 recorded PSU activity hours and received an Outstanding Academic Performance Award for academic year 2024.
+> Outside software, I serve as President of the PSU Phuket International Student Club, represented PSU at the Asian Undergraduate Symposium 2026 at NUS College, joined a JASSO-supported design workshop at Shibaura Institute of Technology in Tokyo, and participated in international data-analysis and visualization workshops. These experiences, together with community volunteering, gender-equality creative work, and a Youth & Mental Health podcast, strengthened my interest in people-centred technology, sustainable innovation, inclusion, cultural understanding, and wellbeing. I believe small, collaborative actions can create useful local impact.
 >
-> My freelance gaming-PC work taught me to assess customer needs, balance budgets and compatibility, assemble and troubleshoot systems, source components, communicate clearly, and provide basic after-sales support.
+> Alongside assisting with daily family-business operations, I independently bought and resold PCs, components, cameras, and lenses, built and troubleshot custom PCs, negotiated prices, coordinated deliveries, communicated with customers, and provided basic after-sales support.
 >
 > I am seeking software development, full-stack/backend, or digital engineering internship and junior opportunities where I can contribute useful work, learn from experienced teammates, and grow toward real product responsibility.
 >
@@ -286,17 +304,18 @@ Use the real starting month and year before publishing.
 > - Documented results and built a Streamlit interface for prediction testing  
 > - Used TensorFlow, Keras, OpenCV, and scikit-learn in an academic prototype
 
-### Freelance Gaming PC Buyer, Builder & Reseller
+### Family Business Assistant | Freelance PC Builder and PC, Camera and Lens Reseller
 
-**Organization:** Self-Employed / Family Business  
+**Organization:** Family business support and self-employed work
 **Dates:** January 2022-July 2024
 
-> Advised customers, sourced components, assembled custom gaming PCs, and bought and resold computers and parts while supporting family-business operations.
+> Combined two concurrent responsibilities: assisting with family-business operations and independently buying, building, and reselling technology and camera equipment.
 >
-> - Matched components to customer needs, budgets, and compatibility constraints  
-> - Assembled systems and performed setup, diagnostics, and troubleshooting  
-> - Handled sourcing, pricing, negotiation, customer communication, and delivery  
-> - Provided basic after-sales support and practical hardware guidance
+> - Assisted with customer service, purchasing and sales, deliveries, cash handling, expense tracking, order coordination, and price negotiation
+> - Independently sourced and resold PCs, components, cameras, and lenses
+> - Matched PC components to customer needs, budgets, and compatibility constraints
+> - Built custom PCs and performed setup, diagnostics, and troubleshooting
+> - Managed customer communication, delivery, and basic after-sales support
 
 Move **Logistics & Delegate Servicing Team Member - AIESEC in Myanmar** to LinkedIn's Volunteer Experience section:
 
@@ -421,10 +440,22 @@ Then order the remaining skills:
 
 Add Computer Networking, Cybersecurity, and Cryptography near the bottom only as coursework foundations.
 
+Also associate these evidence-backed professional skills with the entries where LinkedIn allows it:
+
+- Cross-Cultural Communication
+- Team Leadership
+- Customer Service
+- Negotiation
+- Problem Solving
+- Adaptability
+- Event Coordination
+- Public Speaking
+
 ## LinkedIn languages
 
 - Burmese: Native or bilingual proficiency
 - English: Full professional proficiency only if it reflects real speaking, writing, and working ability; otherwise use Professional working proficiency
+- Thai: Elementary proficiency; currently learning
 - Korean: Elementary proficiency based on basic coursework
 
 ## Recommendations to request
@@ -456,15 +487,7 @@ The website uses two stable paths:
 
 The navigation, mobile menu, contact page, and footer automatically link to those paths.
 
-To update the Canva resume:
-
-1. Make the changes in Canva.
-2. Export a selectable-text PDF.
-3. Rename it to `resume.pdf`.
-4. Replace `public/resume.pdf`.
-5. Do not change the website code or URL.
-
-To regenerate the code-based one-page resume:
+To regenerate the one-page resume:
 
 ```bash
 python3 scripts/generate_resume.py

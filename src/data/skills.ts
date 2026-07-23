@@ -173,9 +173,9 @@ export const skillCategories: SkillCategory[] = [
       "Developed through PSU Digital Engineering modules, guided exercises, and independent study.",
   },
   {
-    title: "PC Hardware & Customer Support",
+    title: "PC Hardware, Equipment Resale & Customer Support",
     description:
-      "Practical experience from buying, building, troubleshooting, and reselling gaming PCs and components for customers.",
+      "Practical experience from building and troubleshooting gaming PCs, independently reselling computer and camera equipment, and supporting customers and family-business operations.",
     skills: [
       { name: "Component Selection", evidence: "practical-experience" },
       { name: "Compatibility Planning", evidence: "practical-experience" },
@@ -183,12 +183,13 @@ export const skillCategories: SkillCategory[] = [
       { name: "Hardware Diagnostics", evidence: "practical-experience" },
       { name: "Troubleshooting", evidence: "practical-experience" },
       { name: "Parts Sourcing & Resale", evidence: "practical-experience" },
+      { name: "Camera & Lens Resale", evidence: "practical-experience" },
       { name: "Customer Needs Assessment", evidence: "practical-experience" },
       { name: "Basic After-Sales Support", evidence: "practical-experience" },
     ],
     projectExamples: [],
     evidenceNote:
-      "Evidence comes from freelance PC buying, building, resale, and family-business responsibilities from 2022 to 2024.",
+      "Evidence comes from independent PC building and PC/camera equipment resale alongside separate family-business responsibilities from 2022 to 2024.",
   },
   {
     title: "Java & Application Foundations",

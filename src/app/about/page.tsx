@@ -28,7 +28,7 @@ const profileCards = [
   },
   {
     title: "Leadership across cultures",
-    description: "Student-club leadership and international programs in Thailand, Japan, and Singapore have strengthened how I listen and collaborate.",
+    description: "Student leadership and international programs have strengthened how I listen, collaborate, and think about sustainability, inclusion, culture, and community wellbeing.",
     icon: Users,
   },
 ]
@@ -37,8 +37,9 @@ const focusAreas = [
   "Crafting accessible, responsive products with React, Next.js, and TypeScript",
   "Building full-stack systems with clear APIs, sensible data models, and maintainable code",
   "Deepening networks, cybersecurity, cryptography, IoT, and connected-system foundations",
-  "Applying practical PC-hardware knowledge to troubleshooting and real user needs",
+  "Applying practical PC-hardware and equipment-resale experience to troubleshooting and real customer needs",
   "Communicating technical work through documentation, presentations, and cross-cultural teamwork",
+  "Exploring how people-centred technology and small collaborative actions can support sustainability, inclusion, culture, and community wellbeing",
 ]
 
 export default function AboutPage() {
@@ -76,7 +77,7 @@ export default function AboutPage() {
             />
             <Reveal delay={0.08}>
               <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-                I learn by building and by taking responsibility. Software projects have taught me to debug and iterate; freelance PC work taught me to listen to customer needs; research taught me to evaluate evidence; and leadership and international workshops taught me to work across cultures. I am early in my career, honest about what I am still learning, and serious about doing useful work well.
+                I learn by building and by taking responsibility. Software projects have taught me to debug and iterate; freelance PC and camera-equipment work taught me to listen to customer needs; research taught me to evaluate evidence; and leadership and international workshops taught me to work across cultures. Together with community, gender-equality, and youth mental-health activities, those experiences shaped my interest in people-centred technology and small, practical contributions to positive local impact. I am early in my career, honest about what I am still learning, and serious about doing useful work well.
               </p>
               <Button asChild className="mt-8">
                 <Link href="/projects">

@@ -109,7 +109,8 @@ def draw_entry(pdf, title, meta, bullets, y, x=None, width=None):
 
 def circular_profile_image():
     image = Image.open(PROFILE_IMAGE).convert("RGB")
-    fitted = ImageOps.fit(image, (800, 800), method=Image.Resampling.LANCZOS, centering=(0.5, 0.38))
+    # Keep the complete hairline and head-and-shoulders framing from the original portrait.
+    fitted = ImageOps.fit(image, (800, 800), method=Image.Resampling.LANCZOS, centering=(0.5, 0.12))
     buffer = BytesIO()
     fitted.save(buffer, format="JPEG", quality=92)
     buffer.seek(0)
@@ -141,9 +142,9 @@ def build_resume():
     pdf.rect(SIDEBAR_WIDTH, PAGE_HEIGHT - HEADER_HEIGHT, PAGE_WIDTH - SIDEBAR_WIDTH, HEADER_HEIGHT, stroke=0, fill=1)
 
     photo_reader, photo_buffer = circular_profile_image()
-    photo_x = 39
-    photo_y = PAGE_HEIGHT - 130
-    photo_size = 112
+    photo_x = 33
+    photo_y = PAGE_HEIGHT - 154
+    photo_size = 124
     pdf.saveState()
     clip = pdf.beginPath()
     clip.circle(photo_x + photo_size / 2, photo_y + photo_size / 2, photo_size / 2)
@@ -202,7 +203,7 @@ def build_resume():
         ("Web and APIs", "React, Next.js, Tailwind CSS, Node.js, NestJS, Express, FastAPI, Flask"),
         ("Data and ML", "PostgreSQL, MySQL, MongoDB, pandas, scikit-learn, TensorFlow/Keras"),
         ("Tools and systems", "Git, GitHub, Postman, Vercel, PlatformIO, Wokwi, ESP32, MQTT"),
-        ("Hardware", "PC assembly, compatibility planning, diagnostics, troubleshooting"),
+        ("Hardware and resale", "PC assembly, compatibility planning, diagnostics; PC, camera, and lens sourcing and resale"),
         ("Coursework foundations", "Networking, cybersecurity, cryptography, computer architecture"),
     ]
     for label, value in skill_groups:
@@ -213,9 +214,20 @@ def build_resume():
         left_y = draw_wrapped(pdf, value, contact_x, left_y, 145, "Helvetica", 7.05, 8.55, SLATE)
         left_y -= 6
 
-    left_y = draw_sidebar_heading(pdf, "Languages", left_y)
+    left_y = draw_sidebar_heading(pdf, "Core Strengths", left_y)
+    for strength in (
+        "Cross-cultural collaboration",
+        "Practical problem-solving",
+        "Communication and customer awareness",
+        "Adaptability and self-directed learning",
+    ):
+        left_y = draw_wrapped(pdf, strength, contact_x, left_y, 145, "Helvetica", 7.5, 9.8, SLATE)
+        left_y -= 2
+
+    left_y = draw_sidebar_heading(pdf, "Languages", left_y - 5)
     left_y = draw_wrapped(pdf, "Burmese - Native", contact_x, left_y, 145, "Helvetica", 7.6, 10, SLATE)
     left_y = draw_wrapped(pdf, "English - Fluent", contact_x, left_y - 1, 145, "Helvetica", 7.6, 10, SLATE)
+    left_y = draw_wrapped(pdf, "Thai - Basic (currently learning)", contact_x, left_y - 1, 145, "Helvetica", 7.6, 10, SLATE)
     draw_wrapped(pdf, "Korean - Basic coursework", contact_x, left_y - 1, 145, "Helvetica", 7.6, 10, SLATE)
 
     main_x = SIDEBAR_WIDTH + 20
@@ -223,7 +235,7 @@ def build_resume():
     main_y = PAGE_HEIGHT - HEADER_HEIGHT - 23
     main_y = draw_main_heading(pdf, "Professional Summary", main_y)
     summary = (
-        "Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with international student leadership and hands-on PC hardware and customer-support experience. Seeking a software development, backend/full-stack, or digital engineering internship."
+        "Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with cross-cultural leadership, hands-on hardware and customer work, and an interest in people-centred innovation, sustainability, inclusion, and wellbeing. Seeking a software development, backend/full-stack, or digital engineering internship."
     )
     main_y = draw_wrapped(pdf, summary, main_x, main_y, main_width, "Helvetica", 8.0, 10.2, SLATE) - 9
 
@@ -267,9 +279,12 @@ def build_resume():
     )
     main_y = draw_entry(
         pdf,
-        "Freelance Gaming PC Buyer, Builder and Reseller",
-        "Self-Employed / Family Business | Jan 2022-Jul 2024",
-        ["Advised customers on budgets and compatibility; sourced parts, assembled systems, performed diagnostics and troubleshooting, and provided basic after-sales support."],
+        "Family Business Assistant | Freelance PC Builder and PC, Camera and Lens Reseller",
+        "Family business support and self-employed work | Jan 2022-Jul 2024",
+        [
+            "Supported customer service, buying and selling, deliveries, cash handling, expense tracking, orders, and price negotiation for a family business.",
+            "Independently sourced and resold PCs, components, cameras, and lenses; built and troubleshot custom PCs and provided basic after-sales support.",
+        ],
         main_y,
     )
     main_y = draw_entry(
