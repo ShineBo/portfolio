@@ -235,7 +235,7 @@ def build_resume():
     main_y = PAGE_HEIGHT - HEADER_HEIGHT - 23
     main_y = draw_main_heading(pdf, "Professional Summary", main_y)
     summary = (
-        "Computer Science graduate and third-year Digital Engineering student with project-based experience in full-stack web development, backend APIs, AI/ML prototypes, and IoT simulation. Combines technical learning with cross-cultural leadership, hands-on hardware and customer work, and an interest in people-centred innovation, sustainability, inclusion, and wellbeing. Seeking a software development, backend/full-stack, or digital engineering internship."
+        "Third-year Digital Engineering student and Computer Science graduate with project-based experience in full-stack web development, AI/ML development, and strong foundation of other technical skills. Along with leadership, hardware and customer service experience. I have a strong interest in innovation, sustainability and inclusion. I am open to software and full-stack, or digital engineering internship."
     )
     main_y = draw_wrapped(pdf, summary, main_x, main_y, main_width, "Helvetica", 8.0, 10.2, SLATE) - 9
 

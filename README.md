@@ -18,6 +18,32 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Generate the Resume and CV
+
+The document generators use Python packages that are separate from the website's npm dependencies. Create a project-local virtual environment once:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+After editing either generator, activate the environment and rebuild the documents:
+
+```bash
+source .venv/bin/activate
+python scripts/generate_resume.py
+python scripts/generate_cv.py
+```
+
+The generators update these files:
+
+- `output/pdf/shine-bo-bo-resume.pdf` and `public/resume.pdf`
+- `output/pdf/shine-bo-bo-cv.pdf`, `output/docx/shine-bo-bo-cv.docx`, and `public/cv.pdf`
+
+Run `deactivate` when you are finished. Do not install the similarly named `docx` package; this project uses `python-docx`.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

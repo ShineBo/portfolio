@@ -40,14 +40,14 @@ MUTED = "64748B"
 LIGHT = "CBD5E1"
 
 PROFILE = (
-    "Computer Science graduate and third-year Digital Engineering student with project-based "
-    "experience across full-stack web applications, backend APIs, AI/ML prototypes, IoT simulation, "
-    "and practical PC hardware work. I combine technical learning with international student "
-    "leadership, cross-cultural collaboration, and customer-facing problem-solving. International "
-    "exchanges and community activities have strengthened my interest in people-centred technology "
-    "and small, practical contributions that support sustainable innovation, cultural understanding, "
-    "inclusion, and wellbeing. I am seeking "
-    "software development, full-stack/backend, or digital engineering internship and junior opportunities."
+    "I am a Computer Science graduate and third-year Digital Engineering student with project-based"
+    "experience in full-stack web development, AI/ML engineering and strong foundations in computer science,"
+    "with practical PC hardware experience. As an international student, I have developed "
+    "leadership, collaboration, and problem-solving skills. Participating in international "
+    "exchanges and community activities, my interest in technology "
+    "and small, practical contributions which I believe that will support sustainable innovation, "
+    "inclusion, and wellbeing. I am open to "
+    "software development, full-stack/backend, or digital engineering internship and junior development roles."
 )
 
 EDUCATION = [
