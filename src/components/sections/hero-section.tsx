@@ -11,7 +11,7 @@ import { documentedProjectCount } from "@/data/projects"
 const heroStats = [
   { value: `${documentedProjectCount}`, label: "Projects documented" },
   { value: "230", label: "Recorded activity hours" },
-  { value: "4.00", label: "Current GPA" },
+  { value: "4.00/4.00", label: "Current GPA" },
 ]
 
 export function HeroSection() {

@@ -35,7 +35,7 @@ export const education: Education[] = [
     location: "Yangon, Myanmar",
     status: "Graduated",
     period: "2021 – 2025",
-    gpa: "3.74",
+    gpa: "3.74/4.00",
     description:
       "A Computer Science degree shaped by a broad liberal-arts education. Alongside software and computing foundations, the program developed my awareness of people, society, ethics, culture, and the contexts in which technology is used.",
     highlights: [
@@ -87,7 +87,7 @@ export const education: Education[] = [
     location: "Phuket, Thailand",
     status: "3rd year · currently studying",
     period: "2024 – Present",
-    gpa: "4.00",
+    gpa: "4.00/4.00",
     description:
       "A 120-credit, project- and real-case-based engineering program connecting software, automation, connected systems, and cybersecurity. I am building breadth across the program while developing deeper practical interests in software engineering, networks and security, and intelligent objects.",
     highlights: [
