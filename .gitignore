@@ -23,6 +23,14 @@ __pycache__/
 # production
 /build
 
+# private local career-document sources and generated duplicates
+/CAREER_DOCUMENTS_GUIDE.md
+/CONTENT_GUIDE.md
+/output/
+/scripts/generate_cv.py
+/scripts/generate_resume.py
+/requirements.txt
+
 # misc
 .DS_Store
 *.pem
